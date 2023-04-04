@@ -16,6 +16,12 @@
       </div>
 
       <div class="mt-4">
+        <x-label for="username" value="{{ __('Nome de usuário') }}" />
+        <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('email')" required
+          autocomplete="username" />
+      </div>
+
+      <div class="mt-4">
         <x-label for="email" value="{{ __('Email') }}" />
         <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
           autocomplete="username" />
@@ -23,7 +29,7 @@
 
       <div class="mt-4">
         <x-label for="password" value="{{ __('Senha') }}" />
-        <x-input id="password" class="block mt-1 w-full" type="password" name="Senha" required
+        <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
           autocomplete="new-password" />
       </div>
 
@@ -33,7 +39,7 @@
           required autocomplete="new-password" />
       </div>
       <div class="mt-4">
-        <x-label for="password_confirmation" value="{{ __('Cadastrar como:') }}" />
+        <x-label for="role_id" value="{{ __('Cadastrar como:') }}" />
         <select name="role_id"
           class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
           <option value="1">Colaborador</option>
