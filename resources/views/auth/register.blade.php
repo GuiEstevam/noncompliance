@@ -39,6 +39,19 @@
           required autocomplete="new-password" />
       </div>
       <div class="mt-4">
+        <x-label for="departament" value="{{ __('Departamento:') }}" />
+        <select name="departament"
+          class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+          <option value="1">Fiscal</option>
+          <option value="2">Contábil</option>
+          <option value="3">Pessoal</option>
+          <option value="4">Qualidade</option>
+          <option value="5">Recursos Humanos</option>
+          <option value="6">T.I</option>
+          <option value="7">Financeiro</option>
+        </select>
+      </div>
+      <div class="mt-4">
         <x-label for="role_id" value="{{ __('Cadastrar como:') }}" />
         <select name="role_id"
           class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
@@ -47,6 +60,7 @@
           <option value="3">Gerente</option>
         </select>
       </div>
+
       @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
         <div class="mt-4">
           <x-label for="terms">
