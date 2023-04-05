@@ -36,7 +36,7 @@
           <a class="nav-link" href="/clients/listagem">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/categories/listagem">Categorias</a>
+          <a class="nav-link" href="/classifications/listagem">Classificações</a>
         </li>
       </ul>
     </div>

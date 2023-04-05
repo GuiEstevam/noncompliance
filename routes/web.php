@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComplianceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\CategoryController;
-use App\Models\Compliance;
+use App\Http\Controllers\ClassificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +31,10 @@ Route::get('/users/{id}', [UserController::class, 'edit']);
 Route::get('/clients/listagem', [ClientController::class, 'list']);
 Route::get('/clients/create', [ClientController::class, 'create']);
 Route::post('/clients', [ClientController::class, 'store']);
-//Categorias
-Route::get('/categories/listagem', [CategoryController::class, 'list']);
-Route::get('/categories/create', [CategoryController::class, 'create']);
-Route::post('/categories', [CategoryController::class, 'store']);
+//Classificações
+Route::get('/classifications/listagem', [ClassificationController::class, 'list']);
+Route::get('/classifications/create', [ClassificationController::class, 'create']);
+Route::post('/classifications', [ClassificationController::class, 'store']);
 
 
 Route::middleware([

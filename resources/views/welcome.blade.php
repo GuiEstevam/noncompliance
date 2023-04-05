@@ -35,10 +35,11 @@
           @foreach ($compliance as $compliance)
             <tr>
               <td class="text-center">{{ $compliance->id }}</td>
-              <td class="text-center">{{ $compliance->registeredBy }}</td>
+              @dd ($compliance->users)
+              <td class="text-center">{{ $compliance->users->name }}</td>
               <td class="text-center">{{ \Carbon\Carbon::parse($compliance->compliance_date)->format('d/m/Y') }}</td>
-              <td class="text-center">{{ $compliance->classification }}</td>
-              <td class="text-center">{{ $compliance->client }}</td>
+              <td class="text-center">{{ $compliance->classification->name }}</td>
+              <td class="text-center">{{ $compliance->client->name }}</td>
               <td class="text-center">{{ $compliance->non_compliance }}</td>
               <td class="text-center">{{ $compliance->instant_action }}</td>
               <td class="text-center">{{ $departaments[$compliance->responsable_departament] }}</td>

@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('compliances', function (Blueprint $table) {
             $table->id();
-            $table->integer('registeredBy');
             $table->date('compliance_date');
-            $table->integer('classification');
-            $table->integer('client');
             $table->text('non_compliance');
             $table->text('instant_action');
             $table->integer('responsable_departament');

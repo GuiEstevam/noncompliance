@@ -17,11 +17,11 @@
           <label class="formbold-form-label">
             Registrado por
           </label>
-          <select class="formbold-form-select" name="registeredby" id="registeredby" required>
+          <select class="formbold-form-select" name="user_id" id="user_id" required>
             <option value="" selected disabled>Selecione um colaborador</option>
-            <option value="1">Ivo</option>
-            <option value="2">Jéssica</option>
-            <option value="3">Fabiana</option>
+            @foreach ($users as $users)
+              <option value="{{ $users->id }}">{{ $users->name }}</option>
+            @endforeach
           </select>
         </div>
 
@@ -34,11 +34,11 @@
           <label class="formbold-form-label">
             Classificação
           </label>
-          <select class="formbold-form-select" name="classification" id="classification" required>
+          <select class="formbold-form-select" name="classification_id" id="classification_id" required>
             <option value="" selected disabled>Selecione uma classificação</option>
-            <option value="1">Alta</option>
-            <option value="2">Média</option>
-            <option value="3">Baixa</option>
+            @foreach ($classifications as $classifications)
+              <option value="{{ $classifications->id }}">{{ $classifications->name }}</option>
+            @endforeach
           </select>
         </div>
 
@@ -46,11 +46,11 @@
           <label class="formbold-form-label">
             Cliente
           </label>
-          <select class="formbold-form-select" name="client" id="client" required>
+          <select class="formbold-form-select" name="client_id" id="client_id" required>
             <option value="" selected disabled>Selecione uma empresa</option>
-            <option value="1">GRUNOX</option>
-            <option value="2">TOYS</option>
-            <option value="3">Rações Renata</option>
+            @foreach ($clients as $clients)
+              <option value="{{ $clients->id }}">{{ $clients->name }}</option>
+            @endforeach
           </select>
         </div>
 

@@ -33,8 +33,8 @@
               <td class="text-center" scope="col">{{ $users->id }}</td>
               <td class="text-center" scope="col">{{ $users->name }}</td>
               <td class="text-center" scope="col">{{ $users->email }}</td>
-              <td class="text-center" scope="col">{{ $users->departament }}</td>
-              <td class="text-center" scope="col">{{ $users->role_id }}</td>
+              <td class="text-center" scope="col">{{ $departaments[$users->departament] }}</td>
+              <td class="text-center" scope="col">{{ $levels[$users->role_id] }}</td>
               <td class="text-center" scope="col">
                 <a href="/projetos/edit/{{ $users->id }}" class="btn btn-primary">Editar</a>
               </td>

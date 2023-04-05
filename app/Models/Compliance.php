@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Compliance extends Model
 {
     use HasFactory;
+
+    public $timestamps = true;
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(Client::class);
+    }
 }

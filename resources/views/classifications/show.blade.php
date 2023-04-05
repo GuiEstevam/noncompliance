@@ -5,17 +5,17 @@
 @section('content') <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-sm mt-3 text-right">
       <div class="btn-group" role="group">
-        <a href="/categories/create">
+        <a href="/classifications/create">
           <button class="btn btn-primary">
             Criar
           </button>
         </a>
       </div>
     </div>
-    <h2>CATEGORIAS CADASTRADAS </h2>
+    <h2>CLASSIFICAÇÕES CADASTRADAS </h2>
   </div>
   <div class="col-md-10 offset-md-1 dashboard-events-container">
-    @if (count($categories) > 0)
+    @if (count($classifications) > 0)
       <table class="table table-hover">
         <thead>
           <tr>
@@ -26,20 +26,20 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($categories as $categories)
+          @foreach ($classifications as $classifications)
             <tr>
-              <td class="text-center" scope="col">{{ $categories->id }}</td>
-              <td class="text-center" scope="col">{{ $categories->name }}</td>
-              <td class="text-center" scope="col">{{ $categories->disponibility }}</td>
+              <td class="text-center" scope="col">{{ $classifications->id }}</td>
+              <td class="text-center" scope="col">{{ $classifications->name }}</td>
+              <td class="text-center" scope="col">{{ $classifications->disponibility }}</td>
               <td class="text-center" scope="col">
-                <a href="/projetos/edit/{{ $categories->id }}" class="btn btn-primary">Editar</a>
+                <a href="/projetos/edit/{{ $classifications->id }}" class="btn btn-primary">Editar</a>
               </td>
             </tr>
           @endforeach
         </tbody>
       </table>
     @else
-      <p>Não há categorias cadastradas, <a href="/categories/create">cadastrar categorias</a></p>
+      <p>Não há classificações cadastradas, <a href="/classifications/create">cadastrar classificações</a></p>
     @endif
   </div>
 @endsection
