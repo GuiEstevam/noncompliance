@@ -161,3 +161,7 @@ body {
 .navbar-nav{
   font-weight: 600 !important;
 }
+
+.dashboard-title-container h2 {
+  font-weight: 800;
+}
