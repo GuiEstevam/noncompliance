@@ -41,9 +41,9 @@
               <td class="text-center">{{ $compliance->client }}</td>
               <td class="text-center">{{ $compliance->non_compliance }}</td>
               <td class="text-center">{{ $compliance->instant_action }}</td>
-              <td class="text-center">{{ $compliance->responsable_departament }}</td>
+              <td class="text-center">{{ $departaments[$compliance->responsable_departament] }}</td>
               <td>
-                <a href="/projetos/edit/{{ $compliance->id }}" class="btn btn-primary">Editar</a>
+                <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary">Editar</a>
               </td>
             </tr>
           @endforeach
