@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComplianceController;
+use App\Http\Controllers\UserController;
 use App\Models\Compliance;
 
 /*
@@ -18,6 +19,11 @@ use App\Models\Compliance;
 Route::get('/', [ComplianceController::class, 'index']);
 Route::get('/compliance/create', [ComplianceController::class, 'create']);
 Route::post('/compliance', [ComplianceController::class, 'store']);
+
+//Usuários
+
+Route::get('/users/listagem', [UserController::class, 'list']);
+
 
 Route::middleware([
     'auth:sanctum',

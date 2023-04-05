@@ -25,13 +25,13 @@
           <a class="nav-link" href="/">Listagem</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Usuários</a>
+          <a class="nav-link" href="/users/listagem">Usuários</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/compliance/create">Criar novo</a>
+          <a class="nav-link" href="#">Categorias</a>
         </li>
       </ul>
     </div>
