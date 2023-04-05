@@ -8,6 +8,11 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  {{-- Fonts Google --}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <title>@yield('title')</title>
 </head>
 <header>
@@ -22,16 +27,16 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="/">Listagem</a>
+          <a class="nav-link" href="/">Relatórios</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/listagem">Usuários</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Clientes</a>
+          <a class="nav-link" href="/clients/listagem">Clientes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Categorias</a>
+          <a class="nav-link" href="/categories/listagem">Categorias</a>
         </li>
       </ul>
     </div>
