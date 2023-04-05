@@ -21,19 +21,21 @@ use App\Models\Compliance;
 Route::get('/', [ComplianceController::class, 'index']);
 Route::get('/compliance/create', [ComplianceController::class, 'create']);
 Route::post('/compliance', [ComplianceController::class, 'store']);
+Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit']);
 
 //Usuários
 Route::get('/users/listagem', [UserController::class, 'list']);
-Route::get('/compliance/create', [UserController::class, 'create']);
-Route::post('/compliance', [UserController::class, 'store']);
+Route::get('/users/create', [UserController::class, 'create']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'edit']);
 //Clientes
 Route::get('/clients/listagem', [ClientController::class, 'list']);
-Route::get('/compliance/create', [ClientController::class, 'create']);
-Route::post('/compliance', [ClientController::class, 'store']);
+Route::get('/clients/create', [ClientController::class, 'create']);
+Route::post('/clients', [ClientController::class, 'store']);
 //Categorias
 Route::get('/categories/listagem', [CategoryController::class, 'list']);
-Route::get('/compliance/create', [CategoryController::class, 'create']);
-Route::post('/compliance', [CategoryController::class, 'store']);
+Route::get('/categories/create', [CategoryController::class, 'create']);
+Route::post('/categories', [CategoryController::class, 'store']);
 
 
 Route::middleware([
