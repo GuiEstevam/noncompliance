@@ -5,45 +5,41 @@
 @section('content') <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-sm mt-3 text-right">
       <div class="btn-group" role="group">
-        <a href="/users/create">
+        <a href="/clients/create">
           <button class="btn btn-primary">
             Criar
           </button>
         </a>
       </div>
     </div>
-    <h2>Usuários Cadastrados </h2>
+    <h2>CLIENTES </h2>
   </div>
   <div class="col-md-10 offset-md-1 dashboard-events-container">
-    @if (count($users) > 0)
+    @if (count($clients) > 0)
       <table class="table table-hover">
         <thead>
           <tr>
             <th class="text-center" scope="col">ID</th>
             <th class="text-center" scope="col">Nome</th>
-            <th class="text-center" scope="col">E-mail</th>
-            <th class="text-center" scope="col">Departamento</th>
-            <th class="text-center" scope="col">Nível do usuário</th>
+            <th class="text-center" scope="col">Ativo</th>
             <th class="text-center" scope="col">...</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($users as $users)
+          @foreach ($clients as $clients)
             <tr>
-              <td class="text-center" scope="col">{{ $users->id }}</td>
-              <td class="text-center" scope="col">{{ $users->name }}</td>
-              <td class="text-center" scope="col">{{ $users->email }}</td>
-              <td class="text-center" scope="col">{{ $users->departament }}</td>
-              <td class="text-center" scope="col">{{ $users->role_id }}</td>
+              <td class="text-center" scope="col">{{ $clients->id }}</td>
+              <td class="text-center" scope="col">{{ $clients->name }}</td>
+              <td class="text-center" scope="col">{{ $clients->disponibility ? 'Sim' : 'Não' }}</td>
               <td class="text-center" scope="col">
-                <a href="/projetos/edit/{{ $users->id }}" class="btn btn-primary">Editar</a>
+                <a href="/projetos/edit/{{ $clients->id }}" class="btn btn-primary">Editar</a>
               </td>
             </tr>
           @endforeach
         </tbody>
       </table>
     @else
-      <p>Não há relatórios cadastrados, <a href="/users/create">cadastrar relatórios</a></p>
+      <p>Não há clientes cadastrados</p>
     @endif
   </div>
 @endsection
