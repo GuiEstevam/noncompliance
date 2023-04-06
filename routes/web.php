@@ -21,16 +21,21 @@ Route::get('/', [ComplianceController::class, 'index']);
 Route::get('/compliance/create', [ComplianceController::class, 'create']);
 Route::post('/compliance', [ComplianceController::class, 'store']);
 Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit']);
+Route::put('/compliance/update/{id}', [ComplianceController::class, 'update']);
+Route::get('/compliance/show/{id}', [ComplianceController::class, 'show']);
 
 //Usuários
 Route::get('/users/listagem', [UserController::class, 'list']);
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
-Route::get('/users/{id}', [UserController::class, 'edit']);
+Route::get('/users/edit/{id}', [UserController::class, 'edit']);
+Route::put('/users/update/{id}', [UserController::class, 'update']);
 //Clientes
 Route::get('/clients/listagem', [ClientController::class, 'list']);
 Route::get('/clients/create', [ClientController::class, 'create']);
 Route::post('/clients', [ClientController::class, 'store']);
+Route::get('/clients/edit/{id}', [ClientController::class, 'edit']);
+Route::put('/clients/update/{id}', [ClientController::class, 'update']);
 //Classificações
 Route::get('/classifications/listagem', [ClassificationController::class, 'list']);
 Route::get('/classifications/create', [ClassificationController::class, 'create']);
