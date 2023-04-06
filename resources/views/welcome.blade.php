@@ -20,15 +20,15 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Registrado por</th>
-            <th scope="col">Data de registro</th>
-            <th scope="col">Classificação</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Não conformidade</th>
-            <th scope="col">Ação imediata</th>
-            <th scope="col">Departamento responsável</th>
-            <th scope="col">...</th>
+            <th>ID</th>
+            <th>Registrado por</th>
+            <th>Data de registro</th>
+            <th>Classificação</th>
+            <th>Cliente</th>
+            <th>Não conformidade</th>
+            <th>Ação imediata</th>
+            <th>Departamento responsável</th>
+            <th colspan="2">...</th>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +42,9 @@
               <td class="text-center">{{ $compliance->non_compliance }}</td>
               <td class="text-center">{{ $compliance->instant_action }}</td>
               <td class="text-center">{{ $departaments[$compliance->responsable_departament] }}</td>
-              <td>
-                <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary">Editar</a>
+              <td colspan="2">
+                <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">Visualizar</a>
+                <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">Editar</a>
               </td>
             </tr>
           @endforeach
