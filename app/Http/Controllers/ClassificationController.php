@@ -29,6 +29,6 @@ class ClassificationController extends Controller
 
         $classifications->save();
 
-        return back();
+        return back()->with('msg', 'Classificação cadastrada com sucesso!');
     }
 }
