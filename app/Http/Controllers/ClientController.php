@@ -11,7 +11,7 @@ class ClientController extends Controller
     public function list()
     {
         $client = Client::all();
-        return view('clients.show', ['clients' => $client]);
+        return view('clients.dashboard', ['clients' => $client]);
     }
 
     public function create()
@@ -29,5 +29,18 @@ class ClientController extends Controller
 
         $client->save();
         return back();
+    }
+    public function edit($id)
+    {
+        $client = Client::findOrfail($id);
+
+        return view('clients.edit', ['client' => $client]);
+    }
+
+    public function update(Request $request)
+    {
+        Client::findOrFail($request->id)->update($request->all());
+
+        return redirect('clients/listagem')->with('msg', 'Cliente alterado com sucesso!');
     }
 }
