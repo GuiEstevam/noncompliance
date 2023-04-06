@@ -29,6 +29,7 @@ class ComplianceController extends Controller
 
     public function create()
     {
+        $last_register = Compliance::latest()->value('id');
         $compliances = Compliance::all();
         $clients = Client::all();
         $users = User::all();
@@ -40,7 +41,8 @@ class ComplianceController extends Controller
                 'compliances' => $compliances,
                 'clients' => $clients,
                 'users' => $users,
-                'classifications' => $classifications
+                'classifications' => $classifications,
+                'last_register' => $last_register
             ]
         );
     }
@@ -65,6 +67,13 @@ class ComplianceController extends Controller
     {
         $compliance = Compliance::findOrFail($id);
         $user = User::all();
-        return view('compliance.edit', ['compliance' => $compliance, 'users' => $user]);
+        $classification = Classification::all();
+        $client = Client::all();
+        return view('compliance.edit', [
+            'compliance' => $compliance,
+            'users' => $user,
+            'classifications' => $classification,
+            'clients' => $client,
+        ]);
     }
 }
