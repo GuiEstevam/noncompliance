@@ -25,7 +25,7 @@ Route::put('/compliance/update/{id}', [ComplianceController::class, 'update']);
 Route::get('/compliance/show/{id}', [ComplianceController::class, 'show']);
 
 //Usuários
-Route::get('/users/listagem', [UserController::class, 'list']);
+Route::get('/users/listagem', [UserController::class, 'list'])->middleware('CheckRole');
 Route::get('/users/create', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users/edit/{id}', [UserController::class, 'edit']);
