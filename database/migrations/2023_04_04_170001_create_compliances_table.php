@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('non_compliance');
             $table->text('instant_action');
             $table->integer('responsable_departament');
-            $table->integer('right_action')->nullable();
+            $table->text('right_action')->nullable();
             $table->integer('dealings_owner')->nullable();
             $table->integer('action_time')->nullable();
             $table->date('effiency_check')->nullable();
