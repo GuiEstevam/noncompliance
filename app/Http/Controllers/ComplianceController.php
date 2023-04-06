@@ -14,13 +14,15 @@ class ComplianceController extends Controller
     public function index()
     {
         $departaments = [
-            1 => 'Fiscal',
-            2 => 'Contábil',
-            3 => 'Pessoal',
-            4 => 'Qualidade',
-            5 => 'Recursos Humanos',
-            6 => 'T.I',
-            7 => 'Financeiro',
+            1 => 'Contábil',
+            2 => 'Financeiro',
+            3 => 'Fiscal',
+            4 => 'Pessoal',
+            5 => 'Qualidade',
+            6 => 'Recursos Humanos',
+            7 => 'Societário',
+            8 => 'T.I',
+
         ];
         $compliance = Compliance::with('classification', 'client', 'user')->get();
         return view('welcome', ['compliance' => $compliance, 'departaments' => $departaments]);
@@ -60,7 +62,7 @@ class ComplianceController extends Controller
         $compliance->responsable_departament = $request->responsable_departament;
 
         $compliance->save();
-        return redirect('/');
+        return redirect('/')->with('msg', 'Não conformidade cadastrada com sucesso!');
     }
 
     public function edit($id)
@@ -69,11 +71,41 @@ class ComplianceController extends Controller
         $user = User::all();
         $classification = Classification::all();
         $client = Client::all();
+        $dealing_owners = User::where('role_id', 2)->get();
         return view('compliance.edit', [
             'compliance' => $compliance,
             'users' => $user,
             'classifications' => $classification,
             'clients' => $client,
+            'dealings_owners' => $dealing_owners,
         ]);
+    }
+    public function update(Request $request)
+    {
+        Compliance::findOrFail($request->id)->update($request->all());
+
+        return redirect('/')->with('msg', 'Não conformidade alterada com sucesso!');
+    }
+
+    public function show($id)
+    {
+
+        $departaments = [
+            1 => 'Contábil',
+            2 => 'Financeiro',
+            3 => 'Fiscal',
+            4 => 'Pessoal',
+            5 => 'Qualidade',
+            6 => 'Recursos Humanos',
+            7 => 'Societário',
+            8 => 'T.I',
+
+        ];
+
+        $compliance = Compliance::findOrFail($id);
+
+        // $eventOwner = Compliance::where('id', $event->user_id)->first()->toArray();
+
+        return view('compliance.show', ['compliance' => $compliance, 'departaments' => $departaments]);
     }
 }

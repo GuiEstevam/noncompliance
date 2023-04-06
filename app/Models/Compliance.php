@@ -9,6 +9,10 @@ class Compliance extends Model
 {
     use HasFactory;
 
+    protected $dates = ['date'];
+
+    protected $guarded = [];
+
     public $timestamps = true;
 
     public function classification()
