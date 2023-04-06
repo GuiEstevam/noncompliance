@@ -30,9 +30,9 @@
             <tr>
               <td class="text-center" scope="col">{{ $classifications->id }}</td>
               <td class="text-center" scope="col">{{ $classifications->name }}</td>
-              <td class="text-center" scope="col">{{ $classifications->disponibility }}</td>
+              <td class="text-center" scope="col">{{ $classifications->disponibility ? 'Sim' : 'Não' }}</td>
               <td class="text-center" scope="col">
-                <a href="/projetos/edit/{{ $classifications->id }}" class="btn btn-primary">Editar</a>
+                <a href="/classifications/edit/{{ $classifications->id }}" class="btn btn-primary">Editar</a>
               </td>
             </tr>
           @endforeach

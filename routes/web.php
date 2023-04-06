@@ -40,6 +40,8 @@ Route::put('/clients/update/{id}', [ClientController::class, 'update']);
 Route::get('/classifications/listagem', [ClassificationController::class, 'list']);
 Route::get('/classifications/create', [ClassificationController::class, 'create']);
 Route::post('/classifications', [ClassificationController::class, 'store']);
+Route::get('/classifications/edit/{id}', [ClassificationController::class, 'edit']);
+Route::put('/classifications/update/{id}', [ClassificationController::class, 'update']);
 
 
 Route::middleware([

@@ -11,7 +11,7 @@ class ClassificationController extends Controller
     public function list()
     {
         $classifications = Classification::all();
-        return view('classifications.show', ['classifications' => $classifications]);
+        return view('classifications.dashboard', ['classifications' => $classifications]);
     }
 
     public function create()
@@ -30,5 +30,19 @@ class ClassificationController extends Controller
         $classifications->save();
 
         return back()->with('msg', 'Classificação cadastrada com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        $classification = Classification::findOrfail($id);
+
+        return view('classifications.edit', ['classification' => $classification]);
+    }
+
+    public function update(Request $request)
+    {
+        classification::findOrFail($request->id)->update($request->all());
+
+        return redirect('classifications/listagem')->with('msg', 'Classificação alterada com sucesso!');
     }
 }
