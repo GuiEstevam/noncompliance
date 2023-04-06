@@ -38,9 +38,10 @@ body {
   border: 1px solid #dde3ec;
   background: #ffffff;
   font-size: 16px;
-  color: #536387;
+  color: #000000;
   outline: none;
   resize: none;
+  font-weight: 400;
 }
 
 .formbold-input-radio-wrapper {
@@ -164,4 +165,14 @@ body {
 
 .dashboard-title-container h2 {
   font-weight: 800;
+}
+
+.msg{
+  background-color: #D4EDDA;
+  color:#155724;
+  border: 1px solid #C3E6CB;
+  width:100%;
+  margin-bottom:0;
+  text-align: center;
+  padding: 10px;
 }
