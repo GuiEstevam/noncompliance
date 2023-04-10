@@ -25,23 +25,25 @@ Route::put('/compliance/update/{id}', [ComplianceController::class, 'update']);
 Route::get('/compliance/show/{id}', [ComplianceController::class, 'show']);
 
 //Usuários
-Route::get('/users/listagem', [UserController::class, 'list'])->middleware('CheckRole');
-Route::get('/users/create', [UserController::class, 'create']);
-Route::post('/users', [UserController::class, 'store']);
-Route::get('/users/edit/{id}', [UserController::class, 'edit']);
-Route::put('/users/update/{id}', [UserController::class, 'update']);
+Route::get('/users/listagem', [UserController::class, 'list'])->middleware(['auth', 'checkRole']);
+Route::get('/users/create', [UserController::class, 'create'])->middleware(['auth', 'checkRole']);
+Route::post('/users', [UserController::class, 'store'])->middleware(['auth', 'checkRole']);
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', 'checkRole']);
+Route::put('/users/update/{id}', [UserController::class, 'update'])->middleware(['auth', 'checkRole']);
+
 //Clientes
-Route::get('/clients/listagem', [ClientController::class, 'list']);
-Route::get('/clients/create', [ClientController::class, 'create']);
-Route::post('/clients', [ClientController::class, 'store']);
-Route::get('/clients/edit/{id}', [ClientController::class, 'edit']);
-Route::put('/clients/update/{id}', [ClientController::class, 'update']);
+Route::get('/clients/listagem', [ClientController::class, 'list'])->middleware(['auth', 'checkRole']);
+Route::get('/clients/create', [ClientController::class, 'create'])->middleware(['auth', 'checkRole']);
+Route::post('/clients', [ClientController::class, 'store'])->middleware(['auth', 'checkRole']);
+Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->middleware(['auth', 'checkRole']);
+Route::put('/clients/update/{id}', [ClientController::class, 'update'])->middleware(['auth', 'checkRole']);
+
 //Classificações
-Route::get('/classifications/listagem', [ClassificationController::class, 'list']);
-Route::get('/classifications/create', [ClassificationController::class, 'create']);
-Route::post('/classifications', [ClassificationController::class, 'store']);
-Route::get('/classifications/edit/{id}', [ClassificationController::class, 'edit']);
-Route::put('/classifications/update/{id}', [ClassificationController::class, 'update']);
+Route::get('/classifications/listagem', [ClassificationController::class, 'list'])->middleware(['auth', 'checkRole']);
+Route::get('/classifications/create', [ClassificationController::class, 'create'])->middleware(['auth', 'checkRole']);
+Route::post('/classifications', [ClassificationController::class, 'store'])->middleware(['auth', 'checkRole']);
+Route::get('/classifications/edit/{id}', [ClassificationController::class, 'edit'])->middleware(['auth', 'checkRole']);
+Route::put('/classifications/update/{id}', [ClassificationController::class, 'update'])->middleware(['auth', 'checkRole']);
 
 
 Route::middleware([
