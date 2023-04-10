@@ -27,21 +27,24 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       @auth
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item {{ strtolower(request()->path()) == strtolower('/') ? 'active' : '' }}">
             <a class="nav-link" href="/">RELATÓRIOS</a>
           </li>
           @if (Auth::user()->role_id == 3)
-            <li class="nav-item">
+            <li class="nav-item {{ strtolower(request()->path()) == strtolower('users/listagem') ? 'active' : '' }}">
               <a class="nav-link" href="/users/listagem">USUÁRIOS</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ strtolower(request()->path()) == strtolower('clients/listagem') ? 'active' : '' }}">
               <a class="nav-link" href="/clients/listagem">CLIENTES</a>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item {{ strtolower(request()->path()) == strtolower('classifications/listagem') ? 'active' : '' }}">
               <a class="nav-link" href="/classifications/listagem">CLASSIFICAÇÕES</a>
             </li>
           @endif
         </ul>
+
+
 
       @endauth
     </div>
