@@ -8,6 +8,7 @@ use App\Models\Classification;
 use App\Models\Compliance;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComplianceController extends Controller
 {
@@ -67,6 +68,7 @@ class ComplianceController extends Controller
 
     public function edit($id)
     {
+        $authenticated = Auth::user();
         $compliance = Compliance::findOrFail($id);
         $user = User::all();
         $classification = Classification::all();
@@ -78,6 +80,7 @@ class ComplianceController extends Controller
             'classifications' => $classification,
             'clients' => $client,
             'dealings_owners' => $dealing_owners,
+            'authenticated' => $authenticated,
         ]);
     }
     public function update(Request $request)
