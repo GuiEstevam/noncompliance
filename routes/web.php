@@ -17,12 +17,12 @@ use App\Http\Controllers\ClassificationController;
 |
 */
 
-Route::get('/', [ComplianceController::class, 'index']);
-Route::get('/compliance/create', [ComplianceController::class, 'create']);
-Route::post('/compliance', [ComplianceController::class, 'store']);
-Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit']);
-Route::put('/compliance/update/{id}', [ComplianceController::class, 'update']);
-Route::get('/compliance/show/{id}', [ComplianceController::class, 'show']);
+Route::get('/', [ComplianceController::class, 'index'])->middleware('auth');
+Route::get('/compliance/create', [ComplianceController::class, 'create'])->middleware('auth');
+Route::post('/compliance', [ComplianceController::class, 'store'])->middleware('auth');
+Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit'])->middleware('auth');
+Route::put('/compliance/update/{id}', [ComplianceController::class, 'update'])->middleware('auth');
+Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->middleware('auth');
 
 //Usuários
 Route::get('/users/listagem', [UserController::class, 'list'])->middleware(['auth', 'checkRole']);
