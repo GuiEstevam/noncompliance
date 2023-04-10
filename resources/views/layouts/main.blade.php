@@ -25,20 +25,25 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Relatórios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/listagem">Usuários</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/clients/listagem">Clientes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/classifications/listagem">Classificações</a>
-        </li>
-      </ul>
+      @auth
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">RELATÓRIOS</a>
+          </li>
+          @if (Auth::user()->role_id == 3)
+            <li class="nav-item">
+              <a class="nav-link" href="/users/listagem">USUÁRIOS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/clients/listagem">CLIENTES</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/classifications/listagem">CLASSIFICAÇÕES</a>
+            </li>
+          @endif
+        </ul>
+
+      @endauth
     </div>
   </nav>
 </header>
