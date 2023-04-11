@@ -14,6 +14,14 @@ class ComplianceController extends Controller
 {
     public function index()
     {
+        $user = auth::user();
+
+        $compliancesOwner = $user->compliances;
+
+        $byDepartaments = Compliance::join('users', 'compliances.responsable_departament', '=', 'users.departament')
+            ->where('users.id', $user->id)
+            ->get();
+
         $departaments = [
             1 => 'Contábil',
             2 => 'Financeiro',
@@ -26,12 +34,22 @@ class ComplianceController extends Controller
 
         ];
         $compliance = Compliance::with('classification', 'client', 'user')->get();
-        return view('welcome', ['compliance' => $compliance, 'departaments' => $departaments]);
+        return view(
+            'welcome',
+            compact(
+                'compliance',
+                'departaments',
+                'user',
+                'compliancesOwner',
+                'byDepartaments'
+            )
+        );
     }
 
 
     public function create()
     {
+        $authenticated = Auth::user();
         $last_register = Compliance::latest()->value('id');
         $compliances = Compliance::all();
         $clients = Client::all();
@@ -45,7 +63,8 @@ class ComplianceController extends Controller
                 'clients' => $clients,
                 'users' => $users,
                 'classifications' => $classifications,
-                'last_register' => $last_register
+                'last_register' => $last_register,
+                'authenticated' => $authenticated
             ]
         );
     }
@@ -93,6 +112,12 @@ class ComplianceController extends Controller
     public function show($id)
     {
 
+        $status = [
+            1 => 'Sem trativa',
+            2 => 'Em andamento',
+            3 => 'Finalizado',
+        ];
+
         $departaments = [
             1 => 'Contábil',
             2 => 'Financeiro',
@@ -104,11 +129,22 @@ class ComplianceController extends Controller
             8 => 'T.I',
 
         ];
+        $action_time = [
+            1 => 'Imediato',
+            2 => 'Curto prazo',
+            3 => 'Médio prazo',
+            4 => 'Longo prazo',
+        ];
 
         $compliance = Compliance::findOrFail($id);
 
         // $eventOwner = Compliance::where('id', $event->user_id)->first()->toArray();
 
-        return view('compliance.show', ['compliance' => $compliance, 'departaments' => $departaments]);
+        return view('compliance.show', compact(
+            'compliance',
+            'departaments',
+            'status',
+            'action_time'
+        ));
     }
 }
