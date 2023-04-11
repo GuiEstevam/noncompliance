@@ -61,11 +61,13 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = User::findOrFail($request->id);
-        if ($user->username === $request->username) {
+        if ($user->username == $request->username) {
 
             $user->name = $request->name;
+            $user->password = Hash::make($request->password);
             $user->departament = $request->departament;
             $user->role_id = $request->role_id;
+            $user->status  = $request->status;
 
             $user->save();
         } else {
