@@ -21,7 +21,7 @@
             <option value="0">Não</option>
           </select>
         </div>
-        <button class="formbold-btn">Enviar</button>
+        <button class="formbold-btn">Salvar</button>
       </form>
     </div>
   </div>
