@@ -97,7 +97,7 @@
         <hr color="black">
         <div>
           <label for="right_action" class="formbold-form-label">
-            Ação corretiva/ preventiva / melhoria
+            Ação corretiva/preventiva/melhoria
           </label>
           <textarea rows="6" name="right_action" id="right_action" placeholder="Descreva aqui a ação tomada"
             class="formbold-form-input" required>{{ $compliance->right_action }}</textarea>

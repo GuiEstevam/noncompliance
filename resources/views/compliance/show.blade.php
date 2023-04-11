@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="row">
-      <div id="info-container" class="col-md-6 mt-3 border">
+      <div id="info-container" class="col-6 mt-3 border">
         <p>
         <h4>Criado por:</h4> {{ $compliance->user->name }}
         <h4>Cliente:</h4> {{ $compliance->client->name }}
@@ -23,17 +23,18 @@
         <h4> Departamento responsável:</h4> {{ $departaments[$compliance->responsable_departament] }}
         </p>
       </div>
-      <div id="info-container" class="col-md-6 mt-3 border">
-        <p>
-        <h4>Ação Corretiva/Preventiva/Melhoria</h4> {{ $compliance->right_action }}
-        <h4>Responsável pela tratativa:</h4> {{ $compliance->owner->name }}
-        <h4>Prazo de ação:</h4> {{ $action_time[$compliance->action_time] }}
-        <h4>Verificação de eficácia:</h4>{{ \Carbon\Carbon::parse($compliance->effiency_check)->format('d/m/Y') }}
-        <h4>Status:</h4> {{ $status[$compliance->status] }}
-        </p>
+      @if ($compliance->owner)
+        <div id="info-container" class="col-6 mt-3 border-top border-right border-bottom">
+          <p>
+          <h4>Ação Corretiva/Preventiva/Melhoria: </h4> {{ $compliance->right_action }}
+          <h4>Responsável pela tratativa: </h4> {{ $compliance->owner->name }}
+          <h4>Prazo de ação: </h4> {{ $action_time[$compliance->action_time] }}
+          <h4>Verificação de eficácia: </h4>{{ \Carbon\Carbon::parse($compliance->effiency_check)->format('d/m/Y') }}
+          <h4>Status: </h4> {{ $status[$compliance->status] }}
+          </p>
+        </div>
+      @endif
 
-
-      </div>
     </div>
     <div class="row">
       <div class="col-md-12 mt-5 text-center">

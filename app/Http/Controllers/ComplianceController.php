@@ -87,12 +87,17 @@ class ComplianceController extends Controller
 
     public function edit($id)
     {
+
         $authenticated = Auth::user();
         $compliance = Compliance::findOrFail($id);
         $user = User::all();
         $classification = Classification::all();
         $client = Client::all();
         $dealing_owners = User::where('role_id', 2)->get();
+
+        if ($authenticated->role_id == 1) {
+            return redirect('/')->with('msg', 'Você não pode acessar essa página');
+        }
         return view('compliance.edit', [
             'compliance' => $compliance,
             'users' => $user,

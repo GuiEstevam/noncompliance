@@ -13,7 +13,7 @@
         </a>
       </div>
     </div>
-    <h2>RELATÓRIOS CADASTRADOS </h2>
+    <h2>RELATÓRIOS</h2>
   </div>
   <div class="col-md-10 offset-md-1">
     <!-- Abas nav -->
@@ -27,9 +27,9 @@
         <li class="nav-item">
           <a class="nav-link {{ Auth::user()->role_id == 3 ? 'active' : '' }}" id="all-tab" data-toggle="tab"
             href="#all" role="tab" aria-controls="all" aria-selected="false">Todas as RNC</a>
+        </li>
       @endif
-      </li>
-      @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+      @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
         <li class="nav-item">
           <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab"
             aria-controls="departament" aria-selected="false">Não conformidades do departamento</a>
