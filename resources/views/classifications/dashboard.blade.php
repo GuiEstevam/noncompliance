@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Usuários cadastrados')
+@section('title', 'Classificações cadastradas')
 
 @section('content') <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-sm mt-3 text-right">
@@ -12,7 +12,7 @@
         </a>
       </div>
     </div>
-    <h2>CLASSIFICAÇÕES CADASTRADAS </h2>
+    <h2>CLASSIFICAÇÕES</h2>
   </div>
   <div class="col-md-10 offset-md-1 dashboard-events-container">
     @if (count($classifications) > 0)

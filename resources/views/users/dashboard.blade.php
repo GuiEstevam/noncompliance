@@ -12,7 +12,7 @@
         </a>
       </div>
     </div>
-    <h2>Usuários Cadastrados </h2>
+    <h2>USUÁRIOS</h2>
   </div>
   <div class="col-md-10 offset-md-1 dashboard-events-container">
     @if (count($users) > 0)
@@ -23,6 +23,7 @@
             <th class="text-center" scope="col">Nome</th>
             <th class="text-center" scope="col">Departamento</th>
             <th class="text-center" scope="col">Nível do usuário</th>
+            <th class="text-center" scope="col">Status</th>
             <th class="text-center" scope="col">...</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@
               <td class="text-center" scope="col">{{ $users->name }}</td>
               <td class="text-center" scope="col">{{ $departaments[$users->departament] }}</td>
               <td class="text-center" scope="col">{{ $levels[$users->role_id] }}</td>
+              <td class="text-center" scope="col">{{ $users->status ? 'Sim' : 'Não' }}</td>
               <td class="text-center" scope="col">
                 <a href="/users/edit/{{ $users->id }}" class="btn btn-primary">Editar</a>
               </td>

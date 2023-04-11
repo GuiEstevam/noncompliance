@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Usuários cadastrados')
+@section('title', 'Clientes cadastrados')
 
 @section('content') <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-sm mt-3 text-right">
