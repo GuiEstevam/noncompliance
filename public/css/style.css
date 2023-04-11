@@ -160,7 +160,7 @@ body {
 }
 
 .navbar-nav{
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
 .dashboard-title-container h2 {
@@ -176,3 +176,36 @@ body {
   text-align: center;
   padding: 10px;
 }
+
+h4{
+  font-size:1.2rem !important;
+  font-weight: 500 !important;
+  margin-top: .5rem !important;
+}
+
+#info-container{
+  word-wrap:break-word !important;
+}
+
+.table td {
+  max-height: 75px; /* altura máxima da célula */
+  line-height: 25px; /* altura de cada linha de texto */
+  overflow: hidden; /* esconde o texto que passar da altura máxima */
+  text-overflow: ellipsis; /* adiciona reticências no final do texto que for cortado */
+}
+
+.table td, .table th{
+  border-top:1px solid #838383 !important;
+}
+
+#info-container, p{
+  text-align: justify;
+  line-height: 2rem;
+  border-radius: 20px;
+  border-color: #000000 !important;
+}
+
+.navbar-nav .logout {
+  margin-left: auto !important;
+}
+

@@ -8,20 +8,21 @@
       <img class="logo" src="/img/Logo.png" alt="Consult" />
       <form action="/compliance" method="POST">
         @csrf
-        <div class="formbold-input-group">
+        {{-- <div class="formbold-input-group">
           <label for="name" class="formbold-form-label"> RNC </label>
           <input type="text" name="name" id="name" class="formbold-form-input" value="{{ $last_register + 1 }}"
             disabled />
-        </div>
+        </div> --}}
 
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Registrado por
           </label>
           <select class="formbold-form-select" name="user_id" id="user_id" required>
-            <option value="" selected disabled>Selecione um colaborador</option>
             @foreach ($users as $users)
-              <option value="{{ $users->id }}">{{ $users->name }}</option>
+              <option value="{{ $users->id }}" {{ $authenticated->id == $users->id ? 'selected' : '' }}
+                {{ $users->status == 0 ? 'disabled' : '' }}>
+                {{ $users->name }}</option>
             @endforeach
           </select>
         </div>
@@ -88,7 +89,7 @@
           </select>
         </div>
 
-        <button class="formbold-btn">Enviar</button>
+        <button class="formbold-btn">Salvar</button>
       </form>
     </div>
   </div>

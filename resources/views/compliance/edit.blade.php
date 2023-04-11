@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'RNC - Relatório de Não Conformidade')
+@section('title', 'Editando a RNC: ' . $compliance->id)
 
 @section('content')
   <div class="formbold-main-wrapper">
@@ -21,7 +21,8 @@
           <select class="formbold-form-select" name="user_id" id="user_id"
             {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
             @foreach ($users as $user)
-              <option value="{{ $user->id }}" {{ $user->id == $compliance->user_id ? 'selected' : '' }}">
+              <option value="{{ $user->id }}" {{ $user->id == $compliance->user_id ? 'selected' : '' }}
+                {{ $user->status == 0 ? 'disabled' : '' }}>
                 {{ $user->name }}</option>
             @endforeach
           </select>
@@ -53,7 +54,7 @@
           <select class="formbold-form-select" name="client_id" id="client_id"
             {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
             @foreach ($clients as $client)
-              <option value="{{ $client->id }}" {{ $client->id == $compliance->client_id ? 'selected' : '' }}">
+              <option value="{{ $client->id }}" {{ $client->id == $compliance->client_id ? 'selected' : '' }}>
                 {{ $client->name }}</option>
             @endforeach
           </select>
@@ -134,7 +135,7 @@
           <option value="2" {{ $compliance->status == 2 ? 'selected' : '' }}>Em andamento</option>
           <option value="3" {{ $compliance->status == 3 ? 'selected' : '' }}>Finalizado</option>
         </select>
-        <button class="formbold-btn">Enviar</button>
+        <button class="formbold-btn">Salvar</button>
       </form>
     </div>
   </div>
