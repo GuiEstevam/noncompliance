@@ -46,6 +46,15 @@
             <option value="3" {{ $user->role_id == 3 ? 'selected' : '' }}>Gerente</option>
           </select>
         </div>
+        <div class="formbold-input-group">
+          <label class="formbold-form-label">
+            Ativo
+          </label>
+          <select class="formbold-form-select" name="status" id="status" required>
+            <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Sim</option>
+            <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Não</option>
+          </select>
+        </div>
         <button class="formbold-btn">Salvar</button>
       </form>
     </div>
