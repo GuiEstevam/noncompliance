@@ -34,4 +34,9 @@ class Compliance extends Model
     {
         return $this->belongsTo(User::class, 'dealings_owner');
     }
+
+    public function departament()
+    {
+        return $this->belongsTo(Departament::class);
+    }
 }

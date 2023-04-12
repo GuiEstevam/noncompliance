@@ -41,6 +41,10 @@
               class="nav-item {{ strtolower(request()->path()) == strtolower('classifications/listagem') ? 'active' : '' }}">
               <a class="nav-link" href="/classifications/listagem">CLASSIFICAÇÕES</a>
             </li>
+            <li
+              class="nav-item {{ strtolower(request()->path()) == strtolower('departaments/listagem') ? 'active' : '' }}">
+              <a class="nav-link" href="/departaments/listagem">DEPARTAMENTOS</a>
+            </li>
           @endif
         </ul>
         <ul class="navbar-nav ml-auto">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Classification;
 use App\Models\Compliance;
+use App\Models\Departament;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,25 +16,11 @@ class ComplianceController extends Controller
     public function index()
     {
         $user = auth::user();
+        $departaments = Departament::with('compliances')->where('id', $user->departament)->get();
 
         $compliancesOwner = $user->compliances;
 
-        $byDepartaments = Compliance::join('users', 'compliances.responsable_departament', '=', 'users.departament')
-            ->where('users.id', $user->id)
-            ->get();
-
-        $departaments = [
-            1 => 'Contábil',
-            2 => 'Financeiro',
-            3 => 'Fiscal',
-            4 => 'Pessoal',
-            5 => 'Qualidade',
-            6 => 'Recursos Humanos',
-            7 => 'Societário',
-            8 => 'T.I',
-
-        ];
-        $compliance = Compliance::with('classification', 'client', 'user')->get();
+        $compliance = Compliance::with('classification', 'client', 'user', 'departament')->get();
         return view(
             'welcome',
             compact(
@@ -41,7 +28,6 @@ class ComplianceController extends Controller
                 'departaments',
                 'user',
                 'compliancesOwner',
-                'byDepartaments'
             )
         );
     }

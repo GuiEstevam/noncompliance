@@ -5,6 +5,7 @@ use App\Http\Controllers\ComplianceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClassificationController;
+use App\Http\Controllers\DepartamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,13 @@ Route::get('/classifications/create', [ClassificationController::class, 'create'
 Route::post('/classifications', [ClassificationController::class, 'store'])->middleware(['auth', 'checkRole']);
 Route::get('/classifications/edit/{id}', [ClassificationController::class, 'edit'])->middleware(['auth', 'checkRole']);
 Route::put('/classifications/update/{id}', [ClassificationController::class, 'update'])->middleware(['auth', 'checkRole']);
+
+//Classificações
+Route::get('/departaments/listagem', [DepartamentController::class, 'list'])->middleware(['auth', 'checkRole']);
+Route::get('/departaments/create', [DepartamentController::class, 'create'])->middleware(['auth', 'checkRole']);
+Route::post('/departaments', [DepartamentController::class, 'store'])->middleware(['auth', 'checkRole']);
+Route::get('/departaments/edit/{id}', [DepartamentController::class, 'edit'])->middleware(['auth', 'checkRole']);
+Route::put('/departaments/update/{id}', [DepartamentController::class, 'update'])->middleware(['auth', 'checkRole']);
 
 
 Route::middleware([

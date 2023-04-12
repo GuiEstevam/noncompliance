@@ -67,7 +67,7 @@
                   <td class="text-center">{{ $complianceOwner->client->name }}</td>
                   <td class="cell-size">{{ $complianceOwner->non_compliance }}</td>
                   <td class="cell-size">{{ $complianceOwner->instant_action }}</td>
-                  <td class="text-center">{{ $departaments[$complianceOwner->responsable_departament] }}</td>
+                  <td class="text-center">{{ $complianceOwner->departament->name }}</td>
                   <td class="text-center">
                     <a href="/compliance/show/{{ $complianceOwner->id }}" class="btn btn-primary mt-2">Visualizar</a>
                     <a href="/compliance/edit/{{ $complianceOwner->id }}" class="btn btn-primary mt-2">Editar</a>
@@ -107,7 +107,7 @@
                   <td class="text-center">{{ $compliance->client->name }}</td>
                   <td class="cell-size">{{ $compliance->non_compliance }}</td>
                   <td class="cell-size">{{ $compliance->instant_action }}</td>
-                  <td class="text-center">{{ $departaments[$compliance->responsable_departament] }}</td>
+                  <td class="text-center">{{ $compliance->departament->name }}</td>
                   <td class="text-center">
                     <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">Visualizar</a>
                     <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">Editar</a>
@@ -121,7 +121,7 @@
         @endif
       </div>
       <div class="tab-pane" id="departament" role="tabpanel" aria-labelledby="departament-tab">
-        @if (count($byDepartaments) > 0)
+        @if (count($departaments) > 0)
           <table class="table table-responsive">
             <thead>
               <tr>
@@ -137,22 +137,25 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($byDepartaments as $byDepartament)
-                <tr>
-                  <td class="text-center">{{ $byDepartament->id }}</td>
-                  <td class="text-center">{{ $byDepartament->user->name }}</td>
-                  <td class="text-center">{{ \Carbon\Carbon::parse($byDepartament->compliance_date)->format('d/m/Y') }}
-                  </td>
-                  <td class="text-center">{{ $byDepartament->classification->name }}</td>
-                  <td class="text-center">{{ $byDepartament->client->name }}</td>
-                  <td class="cell-size">{{ $byDepartament->non_compliance }}</td>
-                  <td class="cell-size">{{ $byDepartament->instant_action }}</td>
-                  <td class="text-center">{{ $departaments[$byDepartament->responsable_departament] }}</td>
-                  <td class="text-center">
-                    <a href="/compliance/show/{{ $byDepartament->id }}" class="btn btn-primary mt-2">Visualizar</a>
-                    <a href="/compliance/edit/{{ $byDepartament->id }}" class="btn btn-primary mt-2">Editar</a>
-                  </td>
-                </tr>
+              @foreach ($departaments as $departament)
+                {{-- @dd($departament->compliances) --}}
+                @foreach ($departament->compliances as $compliances)
+                  <tr>
+                    <td class="text-center">{{ $compliances->id }}</td>
+                    <td class="text-center">{{ $compliances->user->name }}</td>
+                    <td class="text-center">{{ \Carbon\Carbon::parse($compliances->compliance_date)->format('d/m/Y') }}
+                    </td>
+                    <td class="text-center">{{ $compliances->classification->name }}</td>
+                    <td class="text-center">{{ $compliances->client->name }}</td>
+                    <td class="cell-size">{{ $compliances->non_compliance }}</td>
+                    <td class="cell-size">{{ $compliances->instant_action }}</td>
+                    <td class="text-center">{{ $departament->name }}</td>
+                    <td class="text-center">
+                      <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">Visualizar</a>
+                      <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">Editar</a>
+                    </td>
+                  </tr>
+                @endforeach
               @endforeach
             </tbody>
           </table>
