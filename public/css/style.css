@@ -202,7 +202,7 @@ h4{
   border-top:1px solid #838383 !important;
 }
 
-#info-container, p{
+#info-container{
   text-align: justify;
   line-height: 2rem;
   border-radius: 20px;
@@ -213,3 +213,16 @@ h4{
   margin-left: auto !important;
 }
 
+tr{
+  font-weight:500 !important;
+}
+
+.bg-inprogress{
+  background-color: #f7f44c;
+}
+.bg-completed{
+  background-color:#a0ddae ;
+}
+.bg-late{
+  background-color: #f56876;
+}

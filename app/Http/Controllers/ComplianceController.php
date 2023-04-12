@@ -16,6 +16,13 @@ class ComplianceController extends Controller
 {
     public function index()
     {
+        $status = [
+            1 => 'Sem trativa',
+            2 => 'Em andamento',
+            3 => 'Finalizado',
+            4 => 'Em atraso',
+        ];
+
         $user = auth::user();
         $departaments = Departament::with('compliances')->where('id', $user->departament)->get();
 
@@ -29,6 +36,7 @@ class ComplianceController extends Controller
                 'departaments',
                 'user',
                 'compliancesOwner',
+                'status'
             )
         );
     }
@@ -133,6 +141,7 @@ class ComplianceController extends Controller
             1 => 'Sem trativa',
             2 => 'Em andamento',
             3 => 'Finalizado',
+            4 => 'Em atraso',
         ];
 
         $departaments = [

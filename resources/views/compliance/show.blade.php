@@ -20,7 +20,7 @@
         <h4> Classificação: </h4> {{ $compliance->classification->name }}
         <h4> Não conformidade relatada:</h4> {{ $compliance->non_compliance }}
         <h4> Ação imediata: </h4>{{ $compliance->instant_action }}
-        <h4> Departamento responsável:</h4> {{ $departaments[$compliance->responsable_departament] }}
+        <h4> Departamento responsável:</h4> {{ $compliance->departament->name }}
         </p>
       </div>
       @if ($compliance->owner)
