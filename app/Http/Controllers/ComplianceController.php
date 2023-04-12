@@ -8,6 +8,7 @@ use App\Models\Classification;
 use App\Models\Compliance;
 use App\Models\Departament;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,22 +37,22 @@ class ComplianceController extends Controller
     public function create()
     {
         $authenticated = Auth::user();
-        $last_register = Compliance::latest()->value('id');
         $compliances = Compliance::all();
         $clients = Client::all();
         $users = User::all();
         $classifications = Classification::all();
+        $departaments = Departament::all();
 
         return view(
             'compliance.create',
-            [
-                'compliances' => $compliances,
-                'clients' => $clients,
-                'users' => $users,
-                'classifications' => $classifications,
-                'last_register' => $last_register,
-                'authenticated' => $authenticated
-            ]
+            compact(
+                'compliances',
+                'clients',
+                'users',
+                'classifications',
+                'authenticated',
+                'departaments'
+            )
         );
     }
 
@@ -65,7 +66,7 @@ class ComplianceController extends Controller
         $compliance->client_id = $request->client_id;
         $compliance->non_compliance = $request->non_compliance;
         $compliance->instant_action = $request->instant_action;
-        $compliance->responsable_departament = $request->responsable_departament;
+        $compliance->departament_id = $request->departament_id;
 
         $compliance->save();
         return redirect('/')->with('msg', 'Não conformidade cadastrada com sucesso!');
@@ -75,27 +76,52 @@ class ComplianceController extends Controller
     {
 
         $authenticated = Auth::user();
+        $clients = Client::all();
+        $classifications = Classification::all();
         $compliance = Compliance::findOrFail($id);
-        $user = User::all();
-        $classification = Classification::all();
-        $client = Client::all();
-        $dealing_owners = User::where('role_id', 2)->get();
+        $dealings_owners = User::where('role_id', 2)->get();
+        $departaments = Departament::all();
+        $users = User::all();
 
         if ($authenticated->role_id == 1) {
             return redirect('/')->with('msg', 'Você não pode acessar essa página');
         }
-        return view('compliance.edit', [
-            'compliance' => $compliance,
-            'users' => $user,
-            'classifications' => $classification,
-            'clients' => $client,
-            'dealings_owners' => $dealing_owners,
-            'authenticated' => $authenticated,
-        ]);
+        return view('compliance.edit', compact(
+            'authenticated',
+            'classifications',
+            'clients',
+            'compliance',
+            'dealings_owners',
+            'departaments',
+            'users',
+        ));
     }
     public function update(Request $request)
     {
-        Compliance::findOrFail($request->id)->update($request->all());
+        $compliance = Compliance::findOrFail($request->id);
+        $actionTime = $request->action_time;
+
+        $today = Carbon::now()->startOfDay(); // Data atual
+        $efficiencyCheck = $today->copy(); // Cópia da data atual para ser modificada
+        switch ($actionTime) {
+            case '1':
+                $efficiencyCheck->addWeekdays(1); // Adiciona 1 dia útil
+                break;
+            case '2':
+                $efficiencyCheck->addWeekdays(7); // Adiciona 7 dias úteis
+                break;
+            case '3':
+                $efficiencyCheck->addWeekdays(15); // Adiciona 15 dias úteis
+                break;
+            case '4':
+                $efficiencyCheck->addWeekdays(30); // Adiciona 30 dias úteis
+                break;
+        }
+
+        $request->merge(['efficiency_check' => $efficiencyCheck]);
+        $request->merge(['status' => 2]);
+
+        $compliance->update($request->all());
 
         return redirect('/')->with('msg', 'Não conformidade alterada com sucesso!');
     }

@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Yasumi\Provider\Brazil;
+use Yasumi\Yasumi;
 
 class AppServiceProvider extends ServiceProvider
 {

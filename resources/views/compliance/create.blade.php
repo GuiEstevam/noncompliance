@@ -5,7 +5,7 @@
 @section('content')
   <div class="formbold-main-wrapper">
     <div class="formbold-form-wrapper">
-      <img class="logo" src="/img/Logo.png" alt="Consult" />
+      {{-- <img class="logo" src="/img/Logo.png" alt="Consult" /> --}}
       <form action="/compliance" method="POST">
         @csrf
         {{-- <div class="formbold-input-group">
@@ -18,13 +18,15 @@
           <label class="formbold-form-label">
             Registrado por
           </label>
-          <select class="formbold-form-select" name="user_id" id="user_id" required>
+          <select class="formbold-form-select" name="fake_user_id" id="fake_user_id" disabled required>
             @foreach ($users as $users)
               <option value="{{ $users->id }}" {{ $authenticated->id == $users->id ? 'selected' : '' }}
                 {{ $users->status == 0 ? 'disabled' : '' }}>
                 {{ $users->name }}</option>
             @endforeach
           </select>
+          <input type="hidden" name="user_id" value="{{ $authenticated->id }}">
+
         </div>
 
         <div class="formbold-input-group">
@@ -76,16 +78,11 @@
           <label class="formbold-form-label">
             Departamento responsável pela ação tratativa
           </label>
-          <select class="formbold-form-select" name="responsable_departament" id="responsable_departament" required>
+          <select class="formbold-form-select" name="departament_id" id="departament_id" required>
             <option value="" selected disabled>Selecione um departamento</option>
-            <option value="1">Contábil</option>
-            <option value="2">Financeiro</option>
-            <option value="3">Fiscal</option>
-            <option value="4">Pessoal</option>
-            <option value="5">Qualidade</option>
-            <option value="6">Recursos Humanos</option>
-            <option value="7">Societário</option>
-            <option value="8">T.I</option>
+            @foreach ($departaments as $departament)
+              <option value="{{ $departament->id }}">{{ $departament->name }}</option>
+            @endforeach
           </select>
         </div>
 

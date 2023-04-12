@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('right_action')->nullable();
             $table->integer('dealings_owner')->nullable();
             $table->integer('action_time')->nullable();
-            $table->date('effiency_check')->nullable();
+            $table->date('efficiency_check')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
         });

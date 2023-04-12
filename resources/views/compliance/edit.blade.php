@@ -5,7 +5,7 @@
 @section('content')
   <div class="formbold-main-wrapper">
     <div class="formbold-form-wrapper">
-      <img class="logo" src="/img/Logo.png" alt="Consult" />
+      {{-- <img class="logo" src="/img/Logo.png" alt="Consult" /> --}}
       <form action="/compliance/update/{{ $compliance->id }}" method="POST">
         @csrf
         @method('PUT')
@@ -80,62 +80,64 @@
           <label class="formbold-form-label">
             Departamento responsável pela ação tratativa
           </label>
-          <select class="formbold-form-select" name="responsable_departament" id="responsable_departament"
+          <select class="formbold-form-select" name="departament_id" id="departament_id"
             {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
-            <option value="" selected disabled>Selecione um departamento</option>
-            <option value="1" {{ $compliance->responsable_departament == 1 ? 'selected' : '' }}>Contábil</option>
-            <option value="2" {{ $compliance->responsable_departament == 2 ? 'selected' : '' }}>Financeiro</option>
-            <option value="3" {{ $compliance->responsable_departament == 3 ? 'selected' : '' }}>Fiscal</option>
-            <option value="4" {{ $compliance->responsable_departament == 4 ? 'selected' : '' }}>Pessoal</option>
-            <option value="5" {{ $compliance->responsable_departament == 5 ? 'selected' : '' }}>Qualidade</option>
-            <option value="6" {{ $compliance->responsable_departament == 6 ? 'selected' : '' }}>Recursos Humanos
-            </option>
-            <option value="7" {{ $compliance->responsable_departament == 7 ? 'selected' : '' }}>Societário</option>
-            <option value="8" {{ $compliance->responsable_departament == 8 ? 'selected' : '' }}>T.I</option>
-          </select>
-        </div>
-        <hr color="black">
-        <div>
-          <label for="right_action" class="formbold-form-label">
-            Ação corretiva/preventiva/melhoria
-          </label>
-          <textarea rows="6" name="right_action" id="right_action" placeholder="Descreva aqui a ação tomada"
-            class="formbold-form-input" required>{{ $compliance->right_action }}</textarea>
-        </div>
-        <div class="formbold-input-group">
-          <label class="formbold-form-label">
-            Responsável pela tratativa
-          </label>
-          <select class="formbold-form-select" name="dealings_owner" id="dealings_owner" required>
-            @foreach ($dealings_owners as $dealing_owner)
-              <option value="{{ $dealing_owner->id }}"
-                {{ $dealing_owner->id == $compliance->dealings_owner ? 'selected' : '' }}>
-                {{ $dealing_owner->name }}</option>
+            @foreach ($departaments as $departament)
+              <option value="{{ $departament->id }}"
+                {{ $departament->id == $compliance->departament_id ? 'selected' : '' }}
+                {{ $departament->disponibility == 0 ? 'disabled' : '' }}>
+                {{ $departament->name }}</option>
             @endforeach
           </select>
         </div>
-        <div class="formbold-input-group">
-          <label class="formbold-form-label">
-            Prazo da ação:
-          </label>
-          <select class="formbold-form-select" name="action_time" id="action_time" required>
-            <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato</option>
-            <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo</option>
-            <option value="3" {{ $compliance->action_time == 3 ? 'selected' : '' }}>Médio prazo</option>
-            <option value="3" {{ $compliance->action_time == 3 ? 'selected' : '' }}>Longo prazo</option>
-          </select>
-        </div>
-        <div class="formbold-input-group">
-          <label for="effiency_check" class="formbold-form-label"> Verificação de eficacia </label>
-          <input type="date" name="effiency_check" class="formbold-form-input"
-            value="{{ $compliance->effiency_check }}"required />
-        </div>
-        <select class="formbold-form-select" name="status" id="status" required>
-          <option value="1" {{ $compliance->status == 1 ? 'selected' : '' }}>Sem trativa</option>
-          <option value="2" {{ $compliance->status == 2 ? 'selected' : '' }}>Em andamento</option>
-          <option value="3" {{ $compliance->status == 3 ? 'selected' : '' }}>Finalizado</option>
+    </div>
+    <div class="formbold-form-wrapper">
+      <div>
+        <label for="right_action" class="formbold-form-label">
+          Ação corretiva/preventiva/melhoria
+        </label>
+        <textarea rows="6" name="right_action" id="right_action" placeholder="Descreva aqui a ação tomada"
+          class="formbold-form-input" required>{{ $compliance->right_action }}</textarea>
+      </div>
+      <div class="formbold-input-group">
+        <label class="formbold-form-label">
+          Responsável pela tratativa
+        </label>
+        <select class="formbold-form-select" name="dealings_owner" id="dealings_owner" required>
+          <option value="" selected disabled> Selecione um coordenador</option>
+          @foreach ($dealings_owners as $dealing_owner)
+            <option value="{{ $dealing_owner->id }}"
+              {{ $dealing_owner->id == $compliance->dealings_owner ? 'selected' : '' }}>
+              {{ $dealing_owner->name }}</option>
+          @endforeach
         </select>
-        <button class="formbold-btn">Salvar</button>
+      </div>
+      <div class="formbold-input-group">
+        <label class="formbold-form-label">
+          Prazo da ação:
+        </label>
+        <select class="formbold-form-select" name="action_time" id="action_time" required>
+          <option value="" selected disabled>Selecione um prazo</option>
+          <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato</option>
+          <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo</option>
+          <option value="3" {{ $compliance->action_time == 3 ? 'selected' : '' }}>Médio prazo</option>
+          <option value="4" {{ $compliance->action_time == 4 ? 'selected' : '' }}>Longo prazo</option>
+        </select>
+      </div>
+    </div>
+    <div class="formbold-form-wrapper">
+      <div class="formbold-input-group">
+        <label for="efficiency_check" class="formbold-form-label"> Verificação de eficácia </label>
+        <input type="date" name="efficiency_check" class="formbold-form-input"
+          value="{{ $compliance->efficiency_check }}"required disabled {{-- {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }} --}} />
+      </div>
+      <select class="formbold-form-select" name="status" id="status" required disabled {{-- {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }} --}}>
+        <option value="" selected disabled>Selecione um status</option>
+        <option value="1" {{ $compliance->status == 1 ? 'selected' : '' }}>Sem tratativa</option>
+        <option value="2" {{ $compliance->status == 2 ? 'selected' : '' }}>Em andamento</option>
+        <option value="3" {{ $compliance->status == 3 ? 'selected' : '' }}>Finalizado</option>
+      </select>
+      <button class="formbold-btn">Salvar</button>
       </form>
     </div>
   </div>
