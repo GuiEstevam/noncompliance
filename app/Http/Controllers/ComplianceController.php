@@ -87,7 +87,7 @@ class ComplianceController extends Controller
         $clients = Client::all();
         $classifications = Classification::all();
         $compliance = Compliance::findOrFail($id);
-        $dealings_owners = User::where('role_id', 2)->get();
+        $dealings_owners = User::where('role_id', 2)->where('departament', $compliance->departament_id)->get();
         $departaments = Departament::all();
         $users = User::all();
 
@@ -127,7 +127,11 @@ class ComplianceController extends Controller
         }
 
         $request->merge(['efficiency_check' => $efficiencyCheck]);
-        $request->merge(['status' => 2]);
+        if ($request->efficiency_status != '1') {
+            $request->merge(['status' => 2]);
+        } else {
+            $request->merge(['status' => 3]);
+        };
 
         $compliance->update($request->all());
 

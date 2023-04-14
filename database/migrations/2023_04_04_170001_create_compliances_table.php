@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('dealings_owner')->nullable();
             $table->integer('action_time')->nullable();
             $table->date('efficiency_check')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->nullable()->default('1');
             $table->timestamps();
         });
     }

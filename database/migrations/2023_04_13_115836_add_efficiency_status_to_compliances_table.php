@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('compliances', function (Blueprint $table) {
-            $table->foreignId('departament_id')->constrained()->nullable();
+            $table->integer('efficiency_status')->nullable();
+            $table->text('efficiency_text')->nullable();
         });
     }
 
@@ -22,9 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('compliances', function (Blueprint $table) {
-            $table->foreignId('departament_id')->constrained()
-                ->nullable()
-                ->onDelete();
+            $table->integer('efficiency_status')->nullable();
+            $table->text('efficiency_text')->nullable();
         });
     }
 };

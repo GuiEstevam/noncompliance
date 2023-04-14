@@ -42,13 +42,14 @@
         <x-label for="departament" value="{{ __('Departamento:') }}" />
         <select name="departament"
           class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-          <option value="1">Fiscal</option>
-          <option value="2">Contábil</option>
-          <option value="3">Pessoal</option>
-          <option value="4">Qualidade</option>
-          <option value="5">Recursos Humanos</option>
-          <option value="6">T.I</option>
-          <option value="7">Financeiro</option>
+          <option value="1">Contábil</option>
+          <option value="2">Financeiro</option>
+          <option value="3">Fiscal</option>
+          <option value="4">Pessoal</option>
+          <option value="5">Qualidade</option>
+          <option value="6">Recursos Humanos</option>
+          <option value="7">Societário</option>
+          <option value="8">T.I</option>
         </select>
       </div>
       <div class="mt-4">
