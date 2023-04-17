@@ -6,12 +6,12 @@
 
   <div class="col-md-10 offset-md-1">
     <div class="row">
-      <div id="info-container" class="col-md-12 text-center mt-3 border">
+      <div id="info-container" class="title-container col-md-12 text-center mt-3">
         <h4> NÃO CONFORMIDADE N° {{ $compliance->id }}</h4>
       </div>
     </div>
     <div class="row">
-      <div id="info-container" class="col-6 mt-3 border">
+      <div id="info-container" class="info-container col-4 offset-1 mt-3 ">
         <p>
         <h4>Criado por:</h4> {{ $compliance->user->name }}
         <h4>Cliente:</h4> {{ $compliance->client->name }}
@@ -24,7 +24,7 @@
         </p>
       </div>
       @if ($compliance->owner)
-        <div id="info-container" class="col-6 mt-3 border-top border-right border-bottom">
+        <div id="info-container" class="info-container col-4 mt-3 offset-2">
           <p>
           <h4>Ação Corretiva/Preventiva/Melhoria: </h4> {{ $compliance->right_action }}
           <h4>Responsável pela tratativa: </h4> {{ $compliance->owner->name }}

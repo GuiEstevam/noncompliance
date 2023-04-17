@@ -153,7 +153,7 @@
           Solução:
         </label>
         <select class="formbold-form-select" name="efficiency_status" id="efficiency_status"
-          onchange="handleEfficiencyStatusChange()" required
+          onchange="handleEfficiencyStatusChange()"
           {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }}>
           <option value=""> Selecione uma
             opção</option>
