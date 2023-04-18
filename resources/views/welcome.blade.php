@@ -54,6 +54,7 @@
                   <th class="text-center">Não conformidade</th>
                   <th class="text-center">Ação imediata</th>
                   <th class="text-center">Departamento responsável</th>
+                  <th class="text-center">Prazo</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">...</th>
                 </tr>
@@ -71,13 +72,16 @@
                     <td class="text-center">{{ $complianceOwner->non_compliance }}</td>
                     <td class="text-center">{{ $complianceOwner->instant_action }}</td>
                     <td class="text-center">{{ $complianceOwner->departament->name }}</td>
+                    </a>
+                    <td class="text-center">
+                      <a class="{{ $complianceOwner->check_late ? 'btn bg-late' : '' }}">
+                        {{ $complianceOwner->check_late ? 'Em atraso' : 'No prazo' }}</a>
+                    </td>
                     <td class="text-center">
                       <a
                         class="{{ $complianceOwner->status == 2 ? 'btn bg-inprogress' : ($complianceOwner->status == 3 ? 'btn bg-completed' : ($complianceOwner->status == 4 ? 'btn bg-late' : '')) }}">
                         {{ $status[$complianceOwner->status] }}
                     </td>
-                    </a>
-
                     <td class="text-center">
                       <a href="/compliance/show/{{ $complianceOwner->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="eye"></ion-icon>
@@ -110,6 +114,7 @@
                   <th class="text-center">Não conformidade</th>
                   <th class="text-center">Ação imediata</th>
                   <th class="text-center">Departamento responsável</th>
+                  <th class="text-center">Prazo</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">...</th>
                 </tr>
@@ -129,6 +134,11 @@
                     <td class="text-center"><a
                         class="{{ $compliance->status == 2 ? 'btn bg-inprogress' : ($compliance->status == 3 ? 'btn bg-completed' : ($compliance->status == 4 ? 'btn bg-late' : '')) }}">{{ $status[$compliance->status] }}</a>
                     </td>
+                    <td class="text-center">
+                      <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
+                        {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
+                    </td>
+                    </a>
                     <td class="text-center">
                       <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="eye"></ion-icon>
@@ -160,6 +170,7 @@
                   <th class="text-center">Não conformidade</th>
                   <th class="text-center">Ação imediata</th>
                   <th class="text-center">Departamento responsável</th>
+                  <th class="text-center">Prazo</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">...</th>
                 </tr>
@@ -167,8 +178,7 @@
               <tbody>
                 @foreach ($departaments as $departament)
                   @foreach ($departament->compliances as $compliances)
-                    <tr
-                      class="{{ $compliances->status == 2 ? 'bg-inprogress' : ($compliances->status == 3 ? 'bg-completed' : ($compliances->status == 4 ? 'bg-late' : '')) }}">
+                    <tr>
                       <td class="text-center">{{ $compliances->id }}</td>
                       <td class="text-center">{{ $compliances->user->name }}</td>
                       <td class="text-center">
@@ -179,10 +189,22 @@
                       <td class="text-center">{{ $compliances->non_compliance }}</td>
                       <td class="text-center">{{ $compliances->instant_action }}</td>
                       <td class="text-center">{{ $departament->name }}</td>
-                      <td class="text-center">{{ $status[$compliances->status] }}</td>
                       <td class="text-center">
-                        <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">Visualizar</a>
-                        <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">Editar</a>
+                        <a class="{{ $compliances->check_late ? 'btn bg-late' : '' }}">
+                          {{ $compliances->check_late ? 'Em atraso' : 'No prazo' }}
+                        </a>
+                      </td>
+                      <td class="text-center"><a
+                          class="{{ $compliances->status == 2 ? 'btn bg-inprogress' : ($compliances->status == 3 ? 'btn bg-completed' : '') }}">
+                          {{ $status[$compliances->status] }}</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                          <ion-icon name="eye"></ion-icon>
+                        </a>
+                        <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                          <ion-icon name="create"></ion-icon>
+                        </a>
                       </td>
                     </tr>
                   @endforeach

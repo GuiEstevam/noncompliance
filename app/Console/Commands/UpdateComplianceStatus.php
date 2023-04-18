@@ -12,7 +12,7 @@ class UpdateComplianceStatus extends Command
      *
      * @var string
      */
-    protected $signature = 'app:update-compliance-status';
+    protected $signature = 'update-compliance-status';
 
     /**
      * The console command description.
@@ -26,10 +26,12 @@ class UpdateComplianceStatus extends Command
      */
     public function handle()
     {
-        $compliances = Compliance::where('efficiency_check', '<', now())->get();
+        $compliances = Compliance::where('efficiency_check', '<', now())
+            ->whereNotIn('status', [3])
+            ->get();
 
         foreach ($compliances as $compliance) {
-            $compliance->status = 4;
+            $compliance->check_late = 1;
             $compliance->save();
         }
         $this->info('Status das compliances atualizado com sucesso!');
