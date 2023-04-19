@@ -5,7 +5,6 @@
 @section('content')
   <div class="formbold-main-wrapper">
     <div class="formbold-form-wrapper">
-      <img class="logo" src="/img/Logo.png" alt="Consult" />
       <form action="/clients/update/{{ $client->id }}" method="POST">
         @csrf
         @method('PUT')
