@@ -69,7 +69,7 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row mb-3">
       @if (session('msg'))
         <p class="msg">
           {{ session('msg') }}

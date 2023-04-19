@@ -46,9 +46,9 @@ class ComplianceController extends Controller
     {
         $authenticated = Auth::user();
         $compliances = Compliance::all();
-        $clients = Client::all();
+        $clients = Client::where('disponibility', 1)->get();
         $users = User::all();
-        $classifications = Classification::all();
+        $classifications = Classification::where('disponibility', 1)->get();
         $departaments = Departament::all();
 
         return view(
@@ -77,7 +77,8 @@ class ComplianceController extends Controller
         $compliance->departament_id = $request->departament_id;
 
         $compliance->save();
-        return redirect('/')->with('msg', 'Não conformidade cadastrada com sucesso!');
+
+        return redirect()->route('compliance.show', $compliance->id)->with('msg', 'Não conformidade cadastrada com sucesso!');
     }
 
     public function edit($id)
@@ -135,7 +136,7 @@ class ComplianceController extends Controller
 
         $compliance->update($request->all());
 
-        return redirect('/')->with('msg', 'Não conformidade alterada com sucesso!');
+        return redirect()->route('compliance.show', $compliance->id)->with('msg', 'Não conformidade alterada com sucesso!');
     }
 
     public function show($id)

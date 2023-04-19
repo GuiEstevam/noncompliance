@@ -120,8 +120,8 @@
         <label class="formbold-form-label">
           Prazo da ação:
         </label>
-        <select class="formbold-form-select" name="action_time" id="action_time" onchange="handleActionTimeChange()"
-          {{-- {{ $authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id ? 'disabled' : '' }} --}} required>
+        <select class="formbold-form-select" name="action_time" id="action_time" {{-- onchange="handleActionTimeChange()" --}}
+          {{ $authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id ? 'disabled' : '' }}>
           <option value="" selected disabled>Selecione um prazo</option>
           <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato</option>
           <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo</option>
@@ -134,13 +134,14 @@
       <div class="formbold-input-group">
         <label for="efficiency_check" class="formbold-form-label"> Verificação de eficácia </label>
         <input type="date" name="efficiency_check" id="efficiency_check" class="formbold-form-input"
-          value="{{ $compliance->efficiency_check }}"required disabled {{-- {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }} --}} />
+          value="{{ $compliance->efficiency_check }}" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} />
       </div>
       <div class="formbold-input-group">
         <label class="formbold-form-label">
           Status
         </label>
-        <select class="formbold-form-select" name="status" id="status" required disabled {{-- {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }} --}}>
+        <select class="formbold-form-select" name="status" id="status"
+          {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
           <option value="" selected disabled>Selecione um status</option>
           <option value="1" {{ $compliance->status == 1 ? 'selected' : '' }}>Sem tratativa</option>
           <option value="2" {{ $compliance->status == 2 ? 'selected' : '' }}>Em andamento</option>
@@ -186,7 +187,7 @@
 
       if (efficiencyStatus.value === "2") {
         rejectionReason.style.display = "block";
-        status.value = "2";
+        status.value = "3";
       } else {
         rejectionReason.style.display = "none";
         status.value = "3";
@@ -195,7 +196,7 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-  <script>
+  {{-- <script>
     function handleActionTimeChange() {
       var actionTime = document.getElementById("action_time");
       var efficiencyCheck = document.getElementById("efficiency_check");
@@ -224,7 +225,7 @@
       // efficiencyCheck.disabled = false;
       efficiencyCheck.value = newDate;
     }
-  </script>
+  </script> --}}
 
   <script>
     window.onload = function() {

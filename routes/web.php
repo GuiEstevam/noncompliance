@@ -23,7 +23,7 @@ Route::get('/compliance/create', [ComplianceController::class, 'create'])->middl
 Route::post('/compliance', [ComplianceController::class, 'store'])->middleware('auth');
 Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit'])->middleware('auth');
 Route::put('/compliance/update/{id}', [ComplianceController::class, 'update'])->middleware('auth');
-Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->middleware('auth');
+Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->name('compliance.show')->middleware('auth');
 
 //Usuários
 Route::get('/users/listagem', [UserController::class, 'list'])->middleware(['auth', 'checkRole']);

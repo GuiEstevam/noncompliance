@@ -29,6 +29,8 @@
           <h4>Ação Corretiva/Preventiva/Melhoria: </h4> {{ $compliance->right_action }}
           <h4>Responsável pela tratativa: </h4> {{ $compliance->owner->name }}
           <h4>Prazo de ação: </h4> {{ $action_time[$compliance->action_time] }}
+          <h4>Prazo: </h4> {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
+
           <h4>Verificação de eficácia: </h4>{{ \Carbon\Carbon::parse($compliance->efficiency_check)->format('d/m/Y') }}
           <h4>Status: </h4> {{ $status[$compliance->status] }}
           </p>
