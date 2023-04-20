@@ -79,9 +79,11 @@
           </label>
           <select class="formbold-form-select" name="departament_id" id="departament_id" required>
             <option value="" selected disabled>Selecione um departamento</option>
-            @foreach ($departaments as $departament)
-              <option value="{{ $departament->id }}">{{ $departament->name }}</option>
-            @endforeach
+            <option value="1">Contábil</option>
+            <option value="3">Fiscal</option>
+            <option value="7">Pessoal</option>
+            <option value="4">Societário</option>
+
           </select>
         </div>
 
