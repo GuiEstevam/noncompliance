@@ -17,6 +17,11 @@ class UserSeeder extends Seeder
     {
         $now = Carbon::now();
         DB::table('users')->insert([
+            ['name' => 'Guilherme Lima', 'username' => 'guilherme.lima', 'password' => Hash::make('C0nsult@'), 'departament' => '8', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '3'],
+            ['name' => 'Vanessa Almeida', 'username' => 'vanessa.almeida', 'password' => Hash::make('C0nsult@'), 'departament' => '5', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '3'],
+            ['name' => 'Ivo Oliveira', 'username' => 'ivo.oliveira', 'password' => Hash::make('C0nsult@'), 'departament' => '1', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '2'],
+            ['name' => 'Jéssica Costa', 'username' => 'jessica.costa', 'password' => Hash::make('C0nsult@'), 'departament' => '3', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '2'],
+            ['name' => 'Fabiana Leonoro', 'username' => 'fabiana.leonoro', 'password' => Hash::make('C0nsult@'), 'departament' => '4', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '2'],
             ['name' => 'Alan Frota', 'username' => 'alan.frota', 'password' => Hash::make('C0nsult@'), 'departament' => '1', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '1'],
             ['name' => 'Amanda Felipe', 'username' => 'amanda.felipe', 'password' => Hash::make('C0nsult@'), 'departament' => '1', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '1'],
             ['name' => 'Guilherme Cunha', 'username' => 'guilherme.cunha', 'password' => Hash::make('C0nsult@'), 'departament' => '1', 'created_at' => $now, 'updated_at' => $now, 'role_id' => '1'],
