@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClassificationController;
 use App\Http\Controllers\DepartamentController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,9 @@ Route::post('/departaments', [DepartamentController::class, 'store'])->middlewar
 Route::get('/departaments/edit/{id}', [DepartamentController::class, 'edit'])->middleware(['auth', 'checkRole']);
 Route::put('/departaments/update/{id}', [DepartamentController::class, 'update'])->middleware(['auth', 'checkRole']);
 
+// Mensagem
+
+Route::put('/message', [MessageController::class, 'create'])->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',

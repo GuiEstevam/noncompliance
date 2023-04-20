@@ -161,29 +161,66 @@
           <option value="2"{{ $compliance->efficiency_status == 2 ? 'selected' : '' }}>Reprovada</option>
         </select>
       </div>
-      <div class="formbold-input-group" id="rejection-reason" style="display:none;">
-        <label class="formbold-form-label">
-          Motivo da reprovação:
-        </label>
-        <textarea rows="6" name="efficiency_text" id="efficiency_text"
-          placeholder="Descreva aqui o motivo da reprovação" class="formbold-form-input" id="rejection_reason"
-          {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }}>{{ $compliance->efficiency_text }}</textarea>
-      </div>
       <button class="formbold-btn">Salvar</button>
       </form>
     </div>
-  </div>
+    <div class="formbold-form-wrapper" id="rejection-reason" style="display:none;">
+      <div class="formbold-input-group">
+        <label class="formbold-form-label">
+          Motivo da reprovação:
+        </label>
+        <div class="chat-box">
+          @foreach ($messages as $message)
+            @if ($message->user_id == $authenticated->id)
+              <div class="chat-r">
+                <div class="sp"></div>
+                <div class="mess mess-r">
+                  <p>{{ $message->message }}</p>
+                  <div class="check">
+                    <span>{{ $message->user->name }}</span>
+                    <span>{{ date('d/m/Y', strtotime($message->created_at)) }}</span>
+                  </div>
+                </div>
+              </div>
+            @else
+              <div class="chat-l">
+                <div class="mess">
+                  <p>{{ $message->message }}</p>
+                  <div class="check">
+                    <span>{{ $message->user->name }}</span>
+                    <span>{{ date('d/m/Y', strtotime($message->created_at)) }}</span>
+                  </div>
+                </div>
+                <div class="sp"></div>
+              </div>
+            @endif
+          @endforeach
+        </div>
 
+        <div class="chat-footer text-center">
+          <form method="POST" id="meuformulario">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="compliance_id" name="compliance_id" value="{{ $compliance->id }}">
+            <textarea rows="3" name="message" id="efficiency_text" placeholder="Descreva aqui o motivo da reprovação"
+              class="formbold-form-input" id="rejection_reason"
+              {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }}></textarea>
+            <input type="submit" class="btn btn-primary" value="Enviar">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      handleEfficiencyStatusChange();
+    });
+  </script>
   <script>
     function handleEfficiencyStatusChange() {
       var efficiencyStatus = document.getElementById("efficiency_status");
       var rejectionReason = document.getElementById("rejection-reason");
       var status = document.getElementById("status");
-
-      if (efficiencyStatus.value === "") {
-        rejectionReason.style.display = "none";
-        return;
-      }
 
       if (efficiencyStatus.value === "2") {
         rejectionReason.style.display = "block";
@@ -194,39 +231,29 @@
       }
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script>
+    $(document).on('submit', '#form-cadastro-cliente', function(e) {
+      e.preventDefault();
 
-  {{-- <script>
-    function handleActionTimeChange() {
-      var actionTime = document.getElementById("action_time");
-      var efficiencyCheck = document.getElementById("efficiency_check");
+      var form = $(this);
+      var url = form.attr('action');
+      var data = form.serialize();
 
-      var daysToAdd = 0;
-      switch (actionTime.value) {
-        case "1":
-          daysToAdd = 1;
-          console.log('a');
-          break;
-        case "2":
-          daysToAdd = 7;
-          console.log('b');
-          break;
-        case "3":
-          daysToAdd = 15;
-          console.log('c');
-          break;
-        case "4":
-          daysToAdd = 30;
-          console.log('d');
-          break;
-      }
-      var newDate = moment().add(daysToAdd, 'days').format('YYYY-MM-DD');
-      console.log(newDate)
-      // efficiencyCheck.disabled = false;
-      efficiencyCheck.value = newDate;
-    }
-  </script> --}}
-
+      $.ajax({
+        url: /messages,
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        success: function(response) {
+          alert(response.mensagem);
+          // Atualizar a interface do usuário com o novo cliente cadastrado
+        },
+        error: function(response) {
+          alert('Ocorreu um erro ao cadastrar o cliente');
+        }
+      });
+    });
+  </script>
   <script>
     window.onload = function() {
       var master = "{{ $authenticated->role_id }}"

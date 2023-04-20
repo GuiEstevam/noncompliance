@@ -39,4 +39,8 @@ class Compliance extends Model
     {
         return $this->belongsTo(Departament::class);
     }
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

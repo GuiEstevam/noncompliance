@@ -91,6 +91,7 @@ class ComplianceController extends Controller
         $dealings_owners = User::where('role_id', 2)->where('departament', $compliance->departament_id)->get();
         $departaments = Departament::all();
         $users = User::all();
+        $messages = $compliance->messages;
 
         if ($authenticated->role_id == 1) {
             return redirect('/')->with('msg', 'Você não pode acessar essa página');
@@ -103,6 +104,7 @@ class ComplianceController extends Controller
             'dealings_owners',
             'departaments',
             'users',
+            'messages'
         ));
     }
     public function update(Request $request)
@@ -128,9 +130,7 @@ class ComplianceController extends Controller
         }
 
         $request->merge(['efficiency_check' => $efficiencyCheck]);
-        if ($request->efficiency_status != '1') {
-            $request->merge(['status' => 2]);
-        } else {
+        if ($request->efficiency_status == '1' || $request->efficiency_status == '2') {
             $request->merge(['status' => 3]);
         };
 
