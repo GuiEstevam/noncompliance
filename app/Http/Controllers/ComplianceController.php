@@ -117,20 +117,26 @@ class ComplianceController extends Controller
         switch ($actionTime) {
             case '1':
                 $efficiencyCheck->addWeekdays(1); // Adiciona 1 dia útil
+                $request->merge(['status' => 2]);
                 break;
             case '2':
                 $efficiencyCheck->addWeekdays(7); // Adiciona 7 dias úteis
+                $request->merge(['status' => 2]);
                 break;
             case '3':
                 $efficiencyCheck->addWeekdays(15); // Adiciona 15 dias úteis
+                $request->merge(['status' => 2]);
                 break;
             case '4':
                 $efficiencyCheck->addWeekdays(30); // Adiciona 30 dias úteis
+                $request->merge(['status' => 2]);
                 break;
         }
 
         $request->merge(['efficiency_check' => $efficiencyCheck]);
-        if ($request->efficiency_status == '1' || $request->efficiency_status == '2') {
+        if ($request->efficiency_status == '2' || $request->efficiency_status == '') {
+            $request->merge(['status' => 2]);
+        } else {
             $request->merge(['status' => 3]);
         };
 

@@ -20,8 +20,16 @@ class MessageController extends Controller
         $messages->save();
 
         return response()->json([
-            'mensagem' => 'Cliente cadastrado com sucesso!',
-            'cliente' => $messages->user_id
+            'mensagem' => '<div class="chat-r">
+            <div class="sp"></div>
+            <div class="mess mess-r">
+              <p>' . $messages->message . '</p>
+              <div class="check">
+                <span>' . $messages->user->name . '</span>
+                <span>' .  date('d/m/Y', strtotime($messages->created_at)) . '</span>
+              </div>
+            </div>
+          </div>'
         ]);
     }
 }

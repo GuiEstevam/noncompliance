@@ -1,8 +1,7 @@
 @extends('layouts.main')
-
 @section('title', 'Editando a RNC: ' . $compliance->id)
-
 @section('content')
+
   <div class="formbold-main-wrapper">
     <div class="formbold-form-wrapper">
       <form action="/compliance/update/{{ $compliance->id }}" method="POST">
@@ -45,7 +44,6 @@
             @endforeach
           </select>
         </div>
-
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Cliente
@@ -58,7 +56,6 @@
             @endforeach
           </select>
         </div>
-
         <div>
           <label for="non_compliance" class="formbold-form-label">
             Não conformidade
@@ -66,7 +63,6 @@
           <textarea rows="6" name="non_compliance" id="non_compliance" placeholder="Descreva aqui a não conformidade"
             class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required> {{ $compliance->non_compliance }} </textarea>
         </div>
-
         <div>
           <label for="instant_action" class="formbold-form-label">
             Ação Imediata
@@ -74,7 +70,6 @@
           <textarea rows="6" name="instant_action" id="instant_action" placeholder="Descreva aqui a ação imediata"
             class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>{{ $compliance->instant_action }}</textarea>
         </div>
-
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Departamento responsável pela ação tratativa
@@ -196,16 +191,14 @@
             @endif
           @endforeach
         </div>
-
         <div class="chat-footer text-center">
-          <form method="POST" id="meuformulario">
+          <form id="meuformulario" action="/message" method="POST">
             @csrf
             @method('PUT')
             <input type="hidden" id="compliance_id" name="compliance_id" value="{{ $compliance->id }}">
             <textarea rows="3" name="message" id="efficiency_text" placeholder="Descreva aqui o motivo da reprovação"
-              class="formbold-form-input" id="rejection_reason"
-              {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }}></textarea>
-            <input type="submit" class="btn btn-primary" value="Enviar">
+              class="formbold-form-input" id="rejection_reason"></textarea>
+            <input type="submit" class="formbold-btn" value="Enviar">
           </form>
         </div>
       </div>
@@ -217,22 +210,7 @@
     });
   </script>
   <script>
-    function handleEfficiencyStatusChange() {
-      var efficiencyStatus = document.getElementById("efficiency_status");
-      var rejectionReason = document.getElementById("rejection-reason");
-      var status = document.getElementById("status");
-
-      if (efficiencyStatus.value === "2") {
-        rejectionReason.style.display = "block";
-        status.value = "3";
-      } else {
-        rejectionReason.style.display = "none";
-        status.value = "3";
-      }
-    }
-  </script>
-  <script>
-    $(document).on('submit', '#form-cadastro-cliente', function(e) {
+    $(document).on('submit', '#meuformulario', function(e) {
       e.preventDefault();
 
       var form = $(this);
@@ -240,13 +218,13 @@
       var data = form.serialize();
 
       $.ajax({
-        url: /messages,
+        url: url,
         type: 'POST',
         dataType: 'json',
         data: data,
         success: function(response) {
-          alert(response.mensagem);
-          // Atualizar a interface do usuário com o novo cliente cadastrado
+          console.log(response)
+          $(".chat-box").append(response.mensagem);
         },
         error: function(response) {
           alert('Ocorreu um erro ao cadastrar o cliente');
@@ -254,6 +232,25 @@
       });
     });
   </script>
+  <script>
+    function handleEfficiencyStatusChange() {
+      var messages = {!! json_encode($messages) !!};
+      var efficiencyStatus = document.getElementById("efficiency_status");
+      var rejectionReason = document.getElementById("rejection-reason");
+      var status = document.getElementById("status");
+
+      if (efficiencyStatus.value === "") {
+        rejectionReason.style.display = "none";
+      } else if (messages.length > 0 || efficiencyStatus.value === "2") {
+        rejectionReason.style.display = "block";
+        status.value = "2";
+      } else {
+        rejectionReason.style.display = "none";
+        status.value = "3";
+      }
+    }
+  </script>
+
   <script>
     window.onload = function() {
       var master = "{{ $authenticated->role_id }}"
