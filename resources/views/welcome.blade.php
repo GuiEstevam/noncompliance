@@ -1,8 +1,7 @@
 @extends('layouts.main')
-
 @section('title', 'Relatórios cadastrados')
-
 @section('content')
+
   <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-md mt-3 text-right">
       <div class="btn-group " role="group">
@@ -19,18 +18,17 @@
     <!-- Abas nav -->
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link {{ Auth::user()->role_id == 1 || Auth::user()->role_id == 2 ? 'active' : '' }}"
-          id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal"
-          aria-selected="true">Minhas não
+        <a class="nav-link {{ $user->role_id == 1 || $user->role_id == 2 ? 'active' : '' }}" id="personal-tab"
+          data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true">Minhas não
           conformidades</a>
       </li>
-      @if (Auth::user()->role_id == 3)
+      @if ($user->role_id == 3)
         <li class="nav-item">
-          <a class="nav-link {{ Auth::user()->role_id == 3 ? 'active' : '' }}" id="all-tab" data-toggle="tab"
-            href="#all" role="tab" aria-controls="all" aria-selected="false">Todas as RNC</a>
+          <a class="nav-link {{ $user->role_id == 3 ? 'active' : '' }}" id="all-tab" data-toggle="tab" href="#all"
+            role="tab" aria-controls="all" aria-selected="false">Todas as RNC</a>
         </li>
       @endif
-      @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
+      @if ($user->role_id == 1 || $user->role_id == 2 || $user->role_id == 3)
         <li class="nav-item">
           <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab"
             aria-controls="departament" aria-selected="false">Não conformidades do departamento</a>
@@ -39,7 +37,7 @@
     </ul>
     <!-- Painel de abas -->
     <div class="tab-content">
-      <div class="tab-pane {{ Auth::user()->role_id == 1 || Auth::user()->role_id == 2 ? 'active' : '' }}" id="personal"
+      <div class="tab-pane {{ $user->role_id == 1 || $user->role_id == 2 ? 'active' : '' }}" id="personal"
         role="tabpanel" aria-labelledby="personal-tab">
         @if (count($compliancesOwner) > 0)
           <div class="table-responsive">
@@ -61,7 +59,7 @@
               </thead>
               <tbody>
                 @foreach ($compliancesOwner as $complianceOwner)
-                  <tr {{-- class="{{ $complianceOwner->status == 2 ? 'bg-inprogress' : ($complianceOwner->status == 3 ? 'bg-completed' : ($complianceOwner->status == 4 ? 'bg-late' : '')) }}"> --}}>
+                  <tr>
                     <td class="text-center">{{ $complianceOwner->id }}</td>
                     <td class="text-center">{{ $complianceOwner->user->name }}</td>
                     <td class="text-center">
@@ -81,6 +79,7 @@
                       <a
                         class="{{ $complianceOwner->status == 2 ? 'btn bg-inprogress' : ($complianceOwner->status == 3 ? 'btn bg-completed' : ($complianceOwner->status == 4 ? 'btn bg-late' : '')) }}">
                         {{ $status[$complianceOwner->status] }}
+                      </a>
                     </td>
                     <td class="text-center">
                       <a href="/compliance/show/{{ $complianceOwner->id }}" class="btn btn-primary mt-2">
@@ -99,7 +98,7 @@
           <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
         @endif
       </div>
-      <div class="tab-pane {{ Auth::user()->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
+      <div class="tab-pane {{ $user->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
         aria-labelledby="all-tab">
         @if (count($compliance) > 0)
           <div class="table-responsive">
@@ -137,8 +136,8 @@
                     <td class="text-center">
                       <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
                         {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
+                      </a>
                     </td>
-                    </a>
                     <td class="text-center">
                       <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="eye"></ion-icon>
@@ -217,6 +216,5 @@
         @endif
       </div>
     </div>
-
   </div>
 @endsection
