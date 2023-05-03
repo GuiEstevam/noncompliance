@@ -102,19 +102,19 @@
         aria-labelledby="all-tab">
         @if (count($compliance) > 0)
           <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="table table-sm" id="myTable">
               <thead>
                 <tr>
-                  <th class="text-center">ID</th>
-                  <th class="text-center">Registrado por</th>
-                  <th class="text-center">Data de registro</th>
-                  <th class="text-center">Classificação</th>
-                  <th class="text-center">Cliente</th>
-                  <th class="text-center">Não conformidade</th>
-                  <th class="text-center">Ação imediata</th>
-                  <th class="text-center">Departamento responsável</th>
-                  <th class="text-center">Prazo</th>
-                  <th class="text-center">Status</th>
+                  <th class="text-center sort" data-sort="id">ID</th>
+                  <th class="text-center sort" data-sort="registeredBy">Registrado por</th>
+                  <th class="text-center sort" data-sort="registrationDate">Data de registro</th>
+                  <th class="text-center sort" data-sort="classification">Classificação</th>
+                  <th class="text-center sort" data-sort="client">Cliente</th>
+                  <th class="text-center sort" data-sort="nonconformity">Não conformidade</th>
+                  <th class="text-center sort" data-sort="immediateAction">Ação imediata</th>
+                  <th class="text-center sort" data-sort="responsibleDepartment">Departamento responsável</th>
+                  <th class="text-center sort" data-sort="deadline">Prazo</th>
+                  <th class="text-center sort" data-sort="status">Status</th>
                   <th class="text-center">...</th>
                 </tr>
               </thead>
@@ -217,4 +217,68 @@
       </div>
     </div>
   </div>
+  <script>
+    const table = document.getElementById('myTable');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    // função de ordenação
+    // função de ordenação
+    const sortFunction = (colIndex, sortOrder) => {
+      const dataType = rows[0].querySelectorAll('td')[colIndex].getAttribute('data-type');
+      rows.sort((rowA, rowB) => {
+        let valA = rowA.querySelectorAll('td')[colIndex].textContent.trim();
+        let valB = rowB.querySelectorAll('td')[colIndex].textContent.trim();
+        if (dataType === 'number') {
+          valA = parseFloat(valA);
+          valB = parseFloat(valB);
+        }
+        if (dataType === 'date') {
+          valA = new Date(valA);
+          valB = new Date(valB);
+        }
+        if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+        if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+      tbody.innerHTML = '';
+      rows.forEach(row => {
+        tbody.appendChild(row);
+      });
+
+      // adiciona ícone de seta na coluna clicada
+      const headers = table.querySelectorAll('th');
+      headers.forEach(header => {
+        const span = header.querySelector('span');
+        if (span) {
+          header.removeChild(span);
+        }
+      });
+      const header = headers[colIndex];
+      const span = document.createElement('span');
+      span.classList.add('sort-arrow');
+      if (sortOrder === 'asc') {
+        span.innerHTML = '&uarr;';
+        header.appendChild(span);
+      } else {
+        span.innerHTML = '&darr;';
+        header.appendChild(span);
+      }
+    };
+
+    // adiciona event listener para cada header de coluna
+    table.querySelectorAll('th').forEach((header, index) => {
+      header.addEventListener('click', () => {
+        const isAscending = header.getAttribute('data-order') === 'asc';
+        const newSortOrder = isAscending ? 'desc' : 'asc';
+        table.querySelectorAll('th').forEach(header => {
+          header.classList.remove('ascending', 'descending');
+          header.removeAttribute('data-order');
+        });
+        header.setAttribute('data-order', newSortOrder);
+        header.classList.add(newSortOrder === 'asc' ? 'ascending' : 'descending');
+        sortFunction(index, newSortOrder);
+      });
+    });
+  </script>
 @endsection
