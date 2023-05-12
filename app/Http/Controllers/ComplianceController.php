@@ -112,33 +112,37 @@ class ComplianceController extends Controller
         $compliance = Compliance::findOrFail($request->id);
         $actionTime = $request->action_time;
 
-        $today = Carbon::now()->startOfDay(); // Data atual
-        $efficiencyCheck = $today->copy(); // Cópia da data atual para ser modificada
-        switch ($actionTime) {
-            case '1':
-                $efficiencyCheck->addWeekdays(1); // Adiciona 1 dia útil
+        if ($request->filled('right_action') && $request->filled('dealings_owner')) {
+            $today = Carbon::now()->startOfDay(); // Data atual
+            $efficiencyCheck = $today->copy(); // Cópia da data atual para ser modificada
+            switch ($actionTime) {
+                case '1':
+                    $efficiencyCheck->addWeekdays(1); // Adiciona 1 dia útil
+                    $request->merge(['status' => 2]);
+                    break;
+                case '2':
+                    $efficiencyCheck->addWeekdays(7); // Adiciona 7 dias úteis
+                    $request->merge(['status' => 2]);
+                    break;
+                case '3':
+                    $efficiencyCheck->addWeekdays(15); // Adiciona 15 dias úteis
+                    $request->merge(['status' => 2]);
+                    break;
+                case '4':
+                    $efficiencyCheck->addWeekdays(30); // Adiciona 30 dias úteis
+                    $request->merge(['status' => 2]);
+                    break;
+            }
+            $request->merge(['efficiency_check' => $efficiencyCheck]);
+        }
+        if ($request->filled('efficiency_status')) {
+            if ($request->efficiency_status == '2' || $request->efficiency_status == '') {
                 $request->merge(['status' => 2]);
-                break;
-            case '2':
-                $efficiencyCheck->addWeekdays(7); // Adiciona 7 dias úteis
-                $request->merge(['status' => 2]);
-                break;
-            case '3':
-                $efficiencyCheck->addWeekdays(15); // Adiciona 15 dias úteis
-                $request->merge(['status' => 2]);
-                break;
-            case '4':
-                $efficiencyCheck->addWeekdays(30); // Adiciona 30 dias úteis
-                $request->merge(['status' => 2]);
-                break;
+            } else {
+                $request->merge(['status' => 3]);
+            };
         }
 
-        $request->merge(['efficiency_check' => $efficiencyCheck]);
-        if ($request->efficiency_status == '2' || $request->efficiency_status == '') {
-            $request->merge(['status' => 2]);
-        } else {
-            $request->merge(['status' => 3]);
-        };
 
         $compliance->update($request->all());
 

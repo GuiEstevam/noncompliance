@@ -76,12 +76,11 @@
           </label>
           <select class="formbold-form-select" name="departament_id" id="departament_id"
             {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
-            @foreach ($departaments as $departament)
-              <option value="{{ $departament->id }}"
-                {{ $departament->id == $compliance->departament_id ? 'selected' : '' }}
-                {{ $departament->disponibility == 0 ? 'disabled' : '' }}>
-                {{ $departament->name }}</option>
-            @endforeach
+            <option value="">Selecione um departamento</option>
+            <option value="1" {{ $compliance->departament_id == 1 ? 'selected' : '' }}>Contábil</option>
+            <option value="3" {{ $compliance->departament_id == 3 ? 'selected' : '' }}>Fiscal</option>
+            <option value="4" {{ $compliance->departament_id == 4 ? 'selected' : '' }}>Pessoal</option>
+            <option value="7" {{ $compliance->departament_id == 7 ? 'selected' : '' }}>Societário</option>
           </select>
         </div>
     </div>
