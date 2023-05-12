@@ -17,7 +17,7 @@
             Registrado por
           </label>
           <select class="formbold-form-select" name="user_id" id="user_id"
-            {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
+            {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
             @foreach ($users as $user)
               <option value="{{ $user->id }}" {{ $user->id == $compliance->user_id ? 'selected' : '' }}
                 {{ $user->status == 0 ? 'disabled' : '' }}>
@@ -28,14 +28,14 @@
         <div class="formbold-input-group">
           <label for="compliance_date" class="formbold-form-label"> Data </label>
           <input type="date" name="compliance_date" class="formbold-form-input"
-            value="{{ $compliance->compliance_date }}" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required />
+            value="{{ $compliance->compliance_date }}" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} />
         </div>
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Classificação
           </label>
           <select class="formbold-form-select" name="classification_id" id="classification_id"
-            {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
+            {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
             @foreach ($classifications as $classification)
               <option value="{{ $classification->id }}"
                 {{ $classification->id == $compliance->classification_id ? 'selected' : '' }}
@@ -49,7 +49,7 @@
             Cliente
           </label>
           <select class="formbold-form-select" name="client_id" id="client_id"
-            {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
+            {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
             @foreach ($clients as $client)
               <option value="{{ $client->id }}" {{ $client->id == $compliance->client_id ? 'selected' : '' }}>
                 {{ $client->name }}</option>
@@ -61,21 +61,21 @@
             Não conformidade
           </label>
           <textarea rows="6" name="non_compliance" id="non_compliance" placeholder="Descreva aqui a não conformidade"
-            class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required> {{ $compliance->non_compliance }} </textarea>
+            class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }}> {{ $compliance->non_compliance }} </textarea>
         </div>
         <div>
           <label for="instant_action" class="formbold-form-label">
             Ação Imediata
           </label>
           <textarea rows="6" name="instant_action" id="instant_action" placeholder="Descreva aqui a ação imediata"
-            class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>{{ $compliance->instant_action }}</textarea>
+            class="formbold-form-input" {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>{{ $compliance->instant_action }}</textarea>
         </div>
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Departamento responsável pela ação tratativa
           </label>
           <select class="formbold-form-select" name="departament_id" id="departament_id"
-            {{ $authenticated->role_id != 3 ? 'disabled' : '' }} required>
+            {{ $authenticated->role_id != 3 ? 'disabled' : '' }}>
             @foreach ($departaments as $departament)
               <option value="{{ $departament->id }}"
                 {{ $departament->id == $compliance->departament_id ? 'selected' : '' }}
@@ -93,8 +93,7 @@
         </label>
         <textarea rows="6" name="right_action" id="right_action" placeholder="Descreva aqui a ação tomada"
           class="formbold-form-input"
-          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}
-          required>{{ $compliance->right_action }}</textarea>
+          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}>{{ $compliance->right_action }}</textarea>
 
       </div>
       <div class="formbold-input-group">
@@ -102,8 +101,7 @@
           Responsável pela tratativa
         </label>
         <select class="formbold-form-select" name="dealings_owner" id="dealings_owner"
-          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}
-          required>
+          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}>
           <option value="" selected disabled> Selecione um coordenador</option>
           @foreach ($dealings_owners as $dealing_owner)
             <option value="{{ $dealing_owner->id }}"

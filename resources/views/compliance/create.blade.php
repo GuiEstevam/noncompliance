@@ -81,8 +81,8 @@
             <option value="" selected disabled>Selecione um departamento</option>
             <option value="1">Contábil</option>
             <option value="3">Fiscal</option>
-            <option value="7">Pessoal</option>
-            <option value="4">Societário</option>
+            <option value="4">Pessoal</option>
+            <option value="7">Societário</option>
 
           </select>
         </div>
