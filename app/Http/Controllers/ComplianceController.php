@@ -17,7 +17,7 @@ class ComplianceController extends Controller
     public function index()
     {
         $status = [
-            1 => 'Sem trativa',
+            1 => 'Sem tratativa',
             2 => 'Em andamento',
             3 => 'Finalizado',
             4 => 'Em atraso',
@@ -149,7 +149,7 @@ class ComplianceController extends Controller
     {
 
         $status = [
-            1 => 'Sem trativa',
+            1 => 'Sem tratativa',
             2 => 'Em andamento',
             3 => 'Finalizado',
             4 => 'Em atraso',
