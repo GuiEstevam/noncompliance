@@ -18,7 +18,7 @@
         </div>
         <div class="formbold-input-group">
           <label for="compliance_date" class="formbold-form-label"> Senha </label>
-          <input type="password" name="password" class="formbold-form-input" value="{{ $user->password }}"required />
+          <input type="password" name="password" class="formbold-form-input" />
         </div>
         <div class="formbold-input-group">
           <label class="formbold-form-label">

@@ -64,10 +64,13 @@ class UserController extends Controller
         if ($user->username == $request->username) {
 
             $user->name = $request->name;
-            $user->password = Hash::make($request->password);
             $user->departament = $request->departament;
             $user->role_id = $request->role_id;
             $user->status  = $request->status;
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
 
             $user->save();
         } else {
