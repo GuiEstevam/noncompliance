@@ -113,7 +113,7 @@ class ComplianceController extends Controller
         $compliance = Compliance::findOrFail($request->id);
         $actionTime = $request->action_time;
 
-        if ($request->filled('right_action') && $request->filled('dealings_owner') && $request->filled('status')) {
+        if ($request->filled('right_action') && $request->filled('dealings_owner') && !$request->filled('status')) {
             $today = Carbon::now()->startOfDay(); // Data atual
             $efficiencyCheck = $today->copy(); // Cópia da data atual para ser modificada
             switch ($actionTime) {

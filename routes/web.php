@@ -26,6 +26,13 @@ Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit'])->midd
 Route::put('/compliance/update/{id}', [ComplianceController::class, 'update'])->middleware('auth');
 Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->name('compliance.show')->middleware('auth');
 
+//Clientes
+Route::get('/clients/listagem', [ClientController::class, 'list'])->middleware(['auth', 'checkSoc']);
+Route::get('/clients/create', [ClientController::class, 'create'])->middleware(['auth', 'checkSoc']);
+Route::post('/clients', [ClientController::class, 'store'])->middleware(['auth', 'checkSoc']);
+Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->middleware(['auth', 'checkSoc']);
+Route::put('/clients/update/{id}', [ClientController::class, 'update'])->middleware(['auth', 'checkSoc']);
+
 //Usuários
 Route::get('/users/listagem', [UserController::class, 'list'])->middleware(['auth', 'checkRole']);
 Route::get('/users/create', [UserController::class, 'create'])->middleware(['auth', 'checkRole']);
@@ -33,12 +40,6 @@ Route::post('/users', [UserController::class, 'store'])->middleware(['auth', 'ch
 Route::get('/users/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', 'checkRole']);
 Route::put('/users/update/{id}', [UserController::class, 'update'])->middleware(['auth', 'checkRole']);
 
-//Clientes
-Route::get('/clients/listagem', [ClientController::class, 'list'])->middleware(['auth', 'checkRole']);
-Route::get('/clients/create', [ClientController::class, 'create'])->middleware(['auth', 'checkRole']);
-Route::post('/clients', [ClientController::class, 'store'])->middleware(['auth', 'checkRole']);
-Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->middleware(['auth', 'checkRole']);
-Route::put('/clients/update/{id}', [ClientController::class, 'update'])->middleware(['auth', 'checkRole']);
 
 //Classificações
 Route::get('/classifications/listagem', [ClassificationController::class, 'list'])->middleware(['auth', 'checkRole']);

@@ -33,12 +33,14 @@
           <li class="nav-item {{ strtolower(request()->path()) == strtolower('/') ? 'active' : '' }}">
             <a class="nav-link" href="/">RELATÓRIOS</a>
           </li>
+          @if (Auth::user()->role_id == 3 || Auth::user()->departament == 7)
+            <li class="nav-item {{ strtolower(request()->path()) == strtolower('clients/listagem') ? 'active' : '' }}">
+              <a class="nav-link" href="/clients/listagem">CLIENTES</a>
+            </li>
+          @endif
           @if (Auth::user()->role_id == 3)
             <li class="nav-item {{ strtolower(request()->path()) == strtolower('users/listagem') ? 'active' : '' }}">
               <a class="nav-link" href="/users/listagem">USUÁRIOS</a>
-            </li>
-            <li class="nav-item {{ strtolower(request()->path()) == strtolower('clients/listagem') ? 'active' : '' }}">
-              <a class="nav-link" href="/clients/listagem">CLIENTES</a>
             </li>
             <li
               class="nav-item {{ strtolower(request()->path()) == strtolower('classifications/listagem') ? 'active' : '' }}">
