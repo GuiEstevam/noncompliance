@@ -125,10 +125,13 @@
               ? 'disabled'
               : '' }}>
           <option value="" selected disabled>Selecione um prazo</option>
-          <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato</option>
-          <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo</option>
-          <option value="3" {{ $compliance->action_time == 3 ? 'selected' : '' }}>Médio prazo</option>
-          <option value="4" {{ $compliance->action_time == 4 ? 'selected' : '' }}>Longo prazo</option>
+          <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato (1 dia útil)</option>
+          <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo (7 dias úteis)
+          </option>
+          <option value="3" {{ $compliance->action_time == 3 ? 'selected' : '' }}>Médio prazo (15 dias úteis)
+          </option>
+          <option value="4" {{ $compliance->action_time == 4 ? 'selected' : '' }}>Longo prazo (30 dias úteis)
+          </option>
         </select>
       </div>
     </div>
@@ -278,7 +281,4 @@
       }
     }
   </script>
-
-
-
 @endsection

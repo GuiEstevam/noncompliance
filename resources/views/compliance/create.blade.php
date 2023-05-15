@@ -19,8 +19,7 @@
           </label>
           <select class="formbold-form-select" name="fake_user_id" id="fake_user_id" disabled>
             @foreach ($users as $users)
-              <option value="{{ $users->id }}" {{ $authenticated->id == $users->id ? 'selected' : '' }}
-                {{ $users->status == 0 ? 'disabled' : '' }}>
+              <option value="{{ $users->id }}" {{ $authenticated->id == $users->id ? 'selected' : '' }}>
                 {{ $users->name }}</option>
             @endforeach
           </select>
