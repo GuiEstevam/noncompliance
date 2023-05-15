@@ -26,38 +26,50 @@ Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit'])->midd
 Route::put('/compliance/update/{id}', [ComplianceController::class, 'update'])->middleware('auth');
 Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->name('compliance.show')->middleware('auth');
 
-//Clientes
-Route::get('/clients/listagem', [ClientController::class, 'list'])->middleware(['auth', 'checkSoc']);
-Route::get('/clients/create', [ClientController::class, 'create'])->middleware(['auth', 'checkSoc']);
-Route::post('/clients', [ClientController::class, 'store'])->middleware(['auth', 'checkSoc']);
-Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->middleware(['auth', 'checkSoc']);
-Route::put('/clients/update/{id}', [ClientController::class, 'update'])->middleware(['auth', 'checkSoc']);
-
-//Usuários
-Route::get('/users/listagem', [UserController::class, 'list'])->middleware(['auth', 'checkRole']);
-Route::get('/users/create', [UserController::class, 'create'])->middleware(['auth', 'checkRole']);
-Route::post('/users', [UserController::class, 'store'])->middleware(['auth', 'checkRole']);
-Route::get('/users/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', 'checkRole']);
-Route::put('/users/update/{id}', [UserController::class, 'update'])->middleware(['auth', 'checkRole']);
 
 
-//Classificações
-Route::get('/classifications/listagem', [ClassificationController::class, 'list'])->middleware(['auth', 'checkRole']);
-Route::get('/classifications/create', [ClassificationController::class, 'create'])->middleware(['auth', 'checkRole']);
-Route::post('/classifications', [ClassificationController::class, 'store'])->middleware(['auth', 'checkRole']);
-Route::get('/classifications/edit/{id}', [ClassificationController::class, 'edit'])->middleware(['auth', 'checkRole']);
-Route::put('/classifications/update/{id}', [ClassificationController::class, 'update'])->middleware(['auth', 'checkRole']);
+// Definir o middleware 'auth' para todas as rotas dentro do grupo
+Route::middleware(['auth'])->group(function () {
+    // Usuários
+    Route::middleware(['checkRole'])->prefix('users')->group(function () {
+        Route::get('/listagem', [UserController::class, 'list']);
+        Route::get('/create', [UserController::class, 'create']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::get('/edit/{id}', [UserController::class, 'edit']);
+        Route::put('/update/{id}', [UserController::class, 'update']);
+    });
 
-//Classificações
-Route::get('/departaments/listagem', [DepartamentController::class, 'list'])->middleware(['auth', 'checkRole']);
-Route::get('/departaments/create', [DepartamentController::class, 'create'])->middleware(['auth', 'checkRole']);
-Route::post('/departaments', [DepartamentController::class, 'store'])->middleware(['auth', 'checkRole']);
-Route::get('/departaments/edit/{id}', [DepartamentController::class, 'edit'])->middleware(['auth', 'checkRole']);
-Route::put('/departaments/update/{id}', [DepartamentController::class, 'update'])->middleware(['auth', 'checkRole']);
+    //Clientes
+    Route::middleware(['checkSoc'])->prefix('clients')->group(function () {
+        Route::get('/listagem', [ClientController::class, 'list']);
+        Route::get('/create', [ClientController::class, 'create']);
+        Route::post('/', [ClientController::class, 'store']);
+        Route::get('/edit/{id}', [ClientController::class, 'edit']);
+        Route::put('/update/{id}', [ClientController::class, 'update']);
+    });
+    // Classificações
+    Route::middleware(['checkRole'])->prefix('classifications')->group(function () {
+        Route::get('/listagem', [ClassificationController::class, 'list']);
+        Route::get('/create', [ClassificationController::class, 'create']);
+        Route::post('/', [ClassificationController::class, 'store']);
+        Route::get('/edit/{id}', [ClassificationController::class, 'edit']);
+        Route::put('/update/{id}', [ClassificationController::class, 'update']);
+    });
+
+    // Departamentos
+    Route::middleware(['checkRole'])->prefix('departaments')->group(function () {
+        Route::get('/listagem', [DepartamentController::class, 'list']);
+        Route::get('/create', [DepartamentController::class, 'create']);
+        Route::post('/', [DepartamentController::class, 'store']);
+        Route::get('/edit/{id}', [DepartamentController::class, 'edit']);
+        Route::put('/update/{id}', [DepartamentController::class, 'update']);
+    });
+
+    Route::put('/message', [MessageController::class, 'create']);
+});
 
 // Mensagem
 
-Route::put('/message', [MessageController::class, 'create'])->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',
