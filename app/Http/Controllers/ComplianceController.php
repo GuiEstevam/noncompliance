@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ComplianceController extends Controller
 {
@@ -112,29 +113,28 @@ class ComplianceController extends Controller
         $compliance = Compliance::findOrFail($request->id);
         $actionTime = $request->action_time;
 
-        if ($request->filled('right_action') && $request->filled('dealings_owner')) {
+        if ($request->filled('right_action') && $request->filled('dealings_owner') && $request->filled('status')) {
             $today = Carbon::now()->startOfDay(); // Data atual
             $efficiencyCheck = $today->copy(); // Cópia da data atual para ser modificada
             switch ($actionTime) {
                 case '1':
                     $efficiencyCheck->addWeekdays(1); // Adiciona 1 dia útil
-                    $request->merge(['status' => 2]);
                     break;
                 case '2':
                     $efficiencyCheck->addWeekdays(7); // Adiciona 7 dias úteis
-                    $request->merge(['status' => 2]);
                     break;
                 case '3':
                     $efficiencyCheck->addWeekdays(15); // Adiciona 15 dias úteis
-                    $request->merge(['status' => 2]);
                     break;
                 case '4':
                     $efficiencyCheck->addWeekdays(30); // Adiciona 30 dias úteis
-                    $request->merge(['status' => 2]);
                     break;
             }
+            $request->merge(['status' => 2]);
             $request->merge(['efficiency_check' => $efficiencyCheck]);
+            Log::info('Esta é uma mensagem informativa222.');
         }
+
         if ($request->filled('efficiency_status')) {
             if ($request->efficiency_status == '2' || $request->efficiency_status == '') {
                 $request->merge(['status' => 2]);

@@ -92,7 +92,10 @@
         </label>
         <textarea rows="6" name="right_action" id="right_action" placeholder="Descreva aqui a ação tomada"
           class="formbold-form-input"
-          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}>{{ $compliance->right_action }}</textarea>
+          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) ||
+          ($compliance->status == 2 && $authenticated->role_id != 3)
+              ? 'disabled'
+              : '' }}>{{ $compliance->right_action }}</textarea>
 
       </div>
       <div class="formbold-input-group">
@@ -100,7 +103,10 @@
           Responsável pela tratativa
         </label>
         <select class="formbold-form-select" name="dealings_owner" id="dealings_owner"
-          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}>
+          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) ||
+          $compliance->status == 2
+              ? 'disabled'
+              : '' }}>
           <option value="" selected disabled> Selecione um coordenador</option>
           @foreach ($dealings_owners as $dealing_owner)
             <option value="{{ $dealing_owner->id }}"
@@ -114,7 +120,10 @@
           Prazo da ação:
         </label>
         <select class="formbold-form-select" name="action_time" id="action_time" {{-- onchange="handleActionTimeChange()" --}}
-          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) || ($compliance->status == 2 && $authenticated->role_id != 3) ? 'disabled' : '' }}>
+          {{ ($authenticated->role_id != 3 && $authenticated->departament != $compliance->departament_id) ||
+          $compliance->status == 2
+              ? 'disabled'
+              : '' }}>
           <option value="" selected disabled>Selecione um prazo</option>
           <option value="1" {{ $compliance->action_time == 1 ? 'selected' : '' }}>Imediato</option>
           <option value="2" {{ $compliance->action_time == 2 ? 'selected' : '' }}>Curto prazo</option>
@@ -147,7 +156,7 @@
         </label>
         <select class="formbold-form-select" name="efficiency_status" id="efficiency_status"
           onchange="handleEfficiencyStatusChange()"
-          {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id ? 'disabled' : '' }}>
+          {{ $authenticated->role_id != 3 && $authenticated->id != $compliance->user_id && $authenticated->departament != $compliance->departament_id ? 'disabled' : '' }}>
           <option value=""> Selecione uma
             opção</option>
           <option value="1"{{ $compliance->efficiency_status == 1 ? 'selected' : '' }}>Aprovada</option>
@@ -225,7 +234,7 @@
           $(".chat-box").append(response.mensagem);
         },
         error: function(response) {
-          alert('Ocorreu um erro ao cadastrar o cliente');
+          alert('Ocorreu um erro ao cadastrar a não conformidade.');
         }
       });
     });
