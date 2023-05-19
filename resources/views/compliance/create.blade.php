@@ -7,12 +7,6 @@
     <div class="formbold-form-wrapper">
       <form action="/compliance" method="POST">
         @csrf
-        {{-- <div class="formbold-input-group">
-          <label for="name" class="formbold-form-label"> RNC </label>
-          <input type="text" name="name" id="name" class="formbold-form-input" value="{{ $last_register + 1 }}"
-            disabled />
-        </div> --}}
-
         <div class="formbold-input-group">
           <label class="formbold-form-label">
             Registrado por
