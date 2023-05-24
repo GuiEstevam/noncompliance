@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         Config::set('app.locale', 'pt_BR');
         date_default_timezone_set(Config::get('app.timezone'));
         Carbon::setLocale('pt_BR');
+        Paginator::useBootstrapFive();
     }
 }

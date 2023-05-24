@@ -29,11 +29,64 @@ class ComplianceController extends Controller
 
         $compliancesOwner = $user->compliances;
 
-        $compliance = Compliance::with('classification', 'client', 'user', 'departament')->get();
+        $search = request('search');
+        $type = request('type');
+
+        if ($search) {
+            $query = Compliance::with('classification', 'client', 'user', 'departament');
+            switch ($type) {
+                case 'id':
+                    $query->where('id', 'like', '%' . $search . '%');
+                    break;
+                case 'user_id':
+                    $query->whereHas('user', function ($subquery) use ($search) {
+                        $subquery->where('name', 'like', '%' . $search . '%');
+                    });
+                    break;
+                case 'registrationDate':
+                    $searchDate = Carbon::createFromFormat('d/m/Y', $search)->format('Y-m-d');
+                    $query->where('compliance_date', 'like', '%' . $searchDate . '%');
+                    break;
+                case 'client':
+                    $query->whereHas('client', function ($subquery) use ($search) {
+                        $subquery->where('name', 'like', '%' . $search . '%');
+                    });
+                    break;
+                case 'classification':
+                    $query->whereHas('classification', function ($subquery) use ($search) {
+                        $subquery->where('name', 'like', '%' . $search . '%');
+                    });
+                    break;
+                case 'departament':
+                    $query->whereHas('departament', function ($subquery) use ($search) {
+                        $subquery->where('name', 'like', '%' . $search . '%');
+                    });
+                case 'status':
+                    // Converter o valor pesquisado para o número correspondente
+                    $status_fliped = array_flip($status);
+                    $statusValue = $status_fliped[$search] ?? null;
+
+                    if ($statusValue !== null) {
+                        $query->where('status', $statusValue);
+                    }
+                    break;
+                case 'check_late':
+                    if ($search == 'Em atraso') {
+                        $query->where('check_late', true);
+                    } elseif ($search == 'No prazo') {
+                        $query->where('check_late', false);
+                    }
+            }
+
+            $compliances = $query->paginate(15);
+        } else {
+            $compliances = Compliance::with('classification', 'client', 'user', 'departament')->paginate(15);
+        }
+
         return view(
             'welcome',
             compact(
-                'compliance',
+                'compliances',
                 'departaments',
                 'user',
                 'compliancesOwner',

@@ -12,7 +12,9 @@
         </a>
       </div>
     </div>
-    <h2>RELATÓRIOS</h2>
+    <a href="/">
+      <h2>RELATÓRIOS</h2>
+    </a>
   </div>
   <div class="col-md-10 offset-md-1">
     <!-- Abas nav -->
@@ -100,122 +102,141 @@
       </div>
       <div class="tab-pane {{ $user->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
         aria-labelledby="all-tab">
-        @if (count($compliance) > 0)
-          <div class="table-responsive">
-            <table class="table table-sm" id="myTable">
-              <thead>
-                <tr>
-                  <th class="text-center sort" data-sort="id">ID</th>
-                  <th class="text-center sort" data-sort="registeredBy">Registrado por</th>
-                  <th class="text-center sort" data-sort="registrationDate">Data de registro</th>
-                  <th class="text-center sort" data-sort="classification">Classificação</th>
-                  <th class="text-center sort" data-sort="client">Cliente</th>
-                  <th class="text-center sort" data-sort="nonconformity">Não conformidade</th>
-                  <th class="text-center sort" data-sort="immediateAction">Ação imediata</th>
-                  <th class="text-center sort" data-sort="responsibleDepartment">Departamento responsável</th>
-                  <th class="text-center sort" data-sort="deadline">Prazo</th>
-                  <th class="text-center sort" data-sort="status">Status</th>
-                  <th class="text-center">...</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($compliance as $compliance)
+        @if (count($compliances) > 0)
+          <form>
+            <div class="input-group m-3">
+              <input type="text" name="search" class="form-control" aria-label="Text input with select button">
+              <div class="input-group-append">
+                <select name="type" class="form-control">
+                  <option selected disabled>Selecione uma opção</option>
+                  <option value="id">ID</option>
+                  <option value="user_id">Registrado por</option>
+                  <option value="registrationDate">Data de registro</option>
+                  <option value="classification">Classificação</option>
+                  <option value="client">Cliente</option>
+                  <option value="departament">Departamento responsável</option>
+                  <option value="status">Status</option>
+                  <option value="check_late">Prazo</option>
+                </select>
+              </div>
+          </form>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm" id="myTable">
+          <thead>
+            <tr>
+              <th class="text-center sort" data-sort="id">ID</th>
+              <th class="text-center sort" data-sort="registeredBy">Registrado por</th>
+              <th class="text-center sort" data-sort="registrationDate">Data de registro</th>
+              <th class="text-center sort" data-sort="classification">Classificação</th>
+              <th class="text-center sort" data-sort="client">Cliente</th>
+              <th class="text-center sort" data-sort="nonconformity">Não conformidade</th>
+              <th class="text-center sort" data-sort="immediateAction">Ação imediata</th>
+              <th class="text-center sort" data-sort="responsibleDepartment">Departamento responsável</th>
+              <th class="text-center sort" data-sort="status">Status</th>
+              <th class="text-center sort" data-sort="check_late">Prazo</th>
+              <th class="text-center">...</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($compliances as $compliance)
+              <tr>
+                <td class="text-center">{{ $compliance->id }}</td>
+                <td class="text-center">{{ $compliance->user->name }}</td>
+                <td class="text-center">{{ \Carbon\Carbon::parse($compliance->compliance_date)->format('d/m/Y') }}
+                </td>
+                <td class="text-center">{{ $compliance->classification->name }}</td>
+                <td class="text-center">{{ $compliance->client->name }}</td>
+                <td class="text-center">{{ $compliance->non_compliance }}</td>
+                <td class="text-center">{{ $compliance->instant_action }}</td>
+                <td class="text-center">{{ $compliance->departament->name }}</td>
+                <td class="text-center"><a
+                    class="{{ $compliance->status == 2 ? 'btn bg-inprogress' : ($compliance->status == 3 ? 'btn bg-completed' : ($compliance->status == 4 ? 'btn bg-late' : '')) }}">{{ $status[$compliance->status] }}</a>
+                </td>
+                <td class="text-center">
+                  <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
+                    {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
+                    <ion-icon name="eye"></ion-icon>
+                  </a>
+                  <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">
+                    <ion-icon name="create"></ion-icon>
+                  </a>
+                </td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+        {{ $compliances->links() }}
+      </div>
+    @else
+      <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
+      @endif
+    </div>
+    <div class="tab-pane" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+      @if (count($departaments) > 0)
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Registrado por</th>
+                <th class="text-center">Data de registro</th>
+                <th class="text-center">Classificação</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Não conformidade</th>
+                <th class="text-center">Ação imediata</th>
+                <th class="text-center">Departamento responsável</th>
+                <th class="text-center">Prazo</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">...</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($departaments as $departament)
+                @foreach ($departament->compliances as $compliances)
                   <tr>
-                    <td class="text-center">{{ $compliance->id }}</td>
-                    <td class="text-center">{{ $compliance->user->name }}</td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($compliance->compliance_date)->format('d/m/Y') }}
-                    </td>
-                    <td class="text-center">{{ $compliance->classification->name }}</td>
-                    <td class="text-center">{{ $compliance->client->name }}</td>
-                    <td class="text-center">{{ $compliance->non_compliance }}</td>
-                    <td class="text-center">{{ $compliance->instant_action }}</td>
-                    <td class="text-center">{{ $compliance->departament->name }}</td>
-                    <td class="text-center"><a
-                        class="{{ $compliance->status == 2 ? 'btn bg-inprogress' : ($compliance->status == 3 ? 'btn bg-completed' : ($compliance->status == 4 ? 'btn bg-late' : '')) }}">{{ $status[$compliance->status] }}</a>
-                    </td>
+                    <td class="text-center">{{ $compliances->id }}</td>
+                    <td class="text-center">{{ $compliances->user->name }}</td>
                     <td class="text-center">
-                      <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
-                        {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
+                      {{ \Carbon\Carbon::parse($compliances->compliance_date)->format('d/m/Y') }}
+                    </td>
+                    <td class="text-center">{{ $compliances->classification->name }}</td>
+                    <td class="text-center">{{ $compliances->client->name }}</td>
+                    <td class="text-center">{{ $compliances->non_compliance }}</td>
+                    <td class="text-center">{{ $compliances->instant_action }}</td>
+                    <td class="text-center">{{ $departament->name }}</td>
+                    <td class="text-center">
+                      <a class="{{ $compliances->check_late ? 'btn bg-late' : '' }}">
+                        {{ $compliances->check_late ? 'Em atraso' : 'No prazo' }}
                       </a>
                     </td>
+                    <td class="text-center"><a
+                        class="{{ $compliances->status == 2 ? 'btn bg-inprogress' : ($compliances->status == 3 ? 'btn bg-completed' : '') }}">
+                        {{ $status[$compliances->status] }}</a>
+                    </td>
                     <td class="text-center">
-                      <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
+                      <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="eye"></ion-icon>
                       </a>
-                      <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">
+                      <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="create"></ion-icon>
                       </a>
                     </td>
                   </tr>
                 @endforeach
-              </tbody>
-            </table>
-          </div>
-        @else
-          <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
-        @endif
-      </div>
-      <div class="tab-pane" id="departament" role="tabpanel" aria-labelledby="departament-tab">
-        @if (count($departaments) > 0)
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="text-center">ID</th>
-                  <th class="text-center">Registrado por</th>
-                  <th class="text-center">Data de registro</th>
-                  <th class="text-center">Classificação</th>
-                  <th class="text-center">Cliente</th>
-                  <th class="text-center">Não conformidade</th>
-                  <th class="text-center">Ação imediata</th>
-                  <th class="text-center">Departamento responsável</th>
-                  <th class="text-center">Prazo</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">...</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($departaments as $departament)
-                  @foreach ($departament->compliances as $compliances)
-                    <tr>
-                      <td class="text-center">{{ $compliances->id }}</td>
-                      <td class="text-center">{{ $compliances->user->name }}</td>
-                      <td class="text-center">
-                        {{ \Carbon\Carbon::parse($compliances->compliance_date)->format('d/m/Y') }}
-                      </td>
-                      <td class="text-center">{{ $compliances->classification->name }}</td>
-                      <td class="text-center">{{ $compliances->client->name }}</td>
-                      <td class="text-center">{{ $compliances->non_compliance }}</td>
-                      <td class="text-center">{{ $compliances->instant_action }}</td>
-                      <td class="text-center">{{ $departament->name }}</td>
-                      <td class="text-center">
-                        <a class="{{ $compliances->check_late ? 'btn bg-late' : '' }}">
-                          {{ $compliances->check_late ? 'Em atraso' : 'No prazo' }}
-                        </a>
-                      </td>
-                      <td class="text-center"><a
-                          class="{{ $compliances->status == 2 ? 'btn bg-inprogress' : ($compliances->status == 3 ? 'btn bg-completed' : '') }}">
-                          {{ $status[$compliances->status] }}</a>
-                      </td>
-                      <td class="text-center">
-                        <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">
-                          <ion-icon name="eye"></ion-icon>
-                        </a>
-                        <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">
-                          <ion-icon name="create"></ion-icon>
-                        </a>
-                      </td>
-                    </tr>
-                  @endforeach
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        @else
-          <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
-        @endif
-      </div>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      @else
+        <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
+      @endif
     </div>
+  </div>
   </div>
   <script>
     const table = document.getElementById('myTable');
