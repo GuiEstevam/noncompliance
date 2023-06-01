@@ -67,8 +67,7 @@ class ComplianceController extends Controller
                     });
                     break;
             }
-
-            if ($searchStatus !== null) {
+            if ($searchStatus == 1 || $searchStatus == 2 || $searchStatus == 3) {
                 $query->where('status', $searchStatus);
             }
 
