@@ -29,59 +29,67 @@ class ComplianceController extends Controller
 
         $compliancesOwner = $user->compliances;
 
-        $search = request('search');
-        $type = request('type');
+        $searchType = request('searchType');
+        $searchStatus = request('searchStatus');
+        $searchLate = request('searchLate');
+        $searchData = request('searchData');
+        $searchData = trim($searchData);
+        $perPage = request('perPage') ?? 10;
 
-        if ($search) {
-            $query = Compliance::with('classification', 'client', 'user', 'departament');
-            switch ($type) {
+
+        $query = Compliance::with('classification', 'client', 'user', 'departament');
+        if ($searchType || $searchStatus || $searchLate || $searchData) {
+            switch ($searchType) {
                 case 'id':
-                    $query->where('id', 'like', '%' . $search . '%');
+                    $query->where('id', 'like', '%' . $searchData . '%');
                     break;
                 case 'user_id':
-                    $query->whereHas('user', function ($subquery) use ($search) {
-                        $subquery->where('name', 'like', '%' . $search . '%');
+                    $query->whereHas('user', function ($subquery) use ($searchData) {
+                        $subquery->where('name', 'like', '%' . $searchData . '%');
                     });
                     break;
                 case 'registrationDate':
-                    $searchDate = Carbon::createFromFormat('d/m/Y', $search)->format('Y-m-d');
-                    $query->where('compliance_date', 'like', '%' . $searchDate . '%');
+                    $query->where('compliance_date', 'like', '%' . $searchData . '%');
                     break;
                 case 'client':
-                    $query->whereHas('client', function ($subquery) use ($search) {
-                        $subquery->where('name', 'like', '%' . $search . '%');
+                    $query->whereHas('client', function ($subquery) use ($searchData) {
+                        $subquery->where('name', 'like', '%' . $searchData . '%');
                     });
                     break;
                 case 'classification':
-                    $query->whereHas('classification', function ($subquery) use ($search) {
-                        $subquery->where('name', 'like', '%' . $search . '%');
+                    $query->whereHas('classification', function ($subquery) use ($searchData) {
+                        $subquery->where('name', 'like', '%' . $searchData . '%');
                     });
                     break;
                 case 'departament':
-                    $query->whereHas('departament', function ($subquery) use ($search) {
-                        $subquery->where('name', 'like', '%' . $search . '%');
+                    $query->whereHas('departament', function ($subquery) use ($searchData) {
+                        $subquery->where('name', 'like', '%' . $searchData . '%');
                     });
-                case 'status':
-                    // Converter o valor pesquisado para o número correspondente
-                    $status_fliped = array_flip($status);
-                    $statusValue = $status_fliped[$search] ?? null;
-
-                    if ($statusValue !== null) {
-                        $query->where('status', $statusValue);
-                    }
                     break;
-                case 'check_late':
-                    if ($search == 'Em atraso') {
-                        $query->where('check_late', true);
-                    } elseif ($search == 'No prazo') {
-                        $query->where('check_late', false);
-                    }
             }
 
-            $compliances = $query->paginate(15);
+            if ($searchStatus !== null) {
+                $query->where('status', $searchStatus);
+            }
+
+            if ($searchLate !== null) {
+                if ($searchLate == '0') {
+                    $query->where('check_late', false);
+                } elseif ($searchLate == '1') {
+                    $query->where('check_late', true);
+                }
+            }
+            $compliances = $query->paginate($perPage);
         } else {
-            $compliances = Compliance::with('classification', 'client', 'user', 'departament')->paginate(15);
+            $compliances = $query->paginate($perPage);
         }
+        $compliances->appends([
+            'searchType' => $searchType,
+            'searchStatus' => $searchStatus,
+            'searchLate' => $searchLate,
+            'searchData' => $searchData,
+            'perPage' => $perPage,
+        ]);
 
         return view(
             'welcome',
@@ -90,11 +98,53 @@ class ComplianceController extends Controller
                 'departaments',
                 'user',
                 'compliancesOwner',
-                'status'
+                'status',
+                'perPage'
             )
         );
     }
 
+    public function options(Request $request)
+    {
+        $filtro = $request->input('filtro');
+        $filtro = strtolower($filtro); // Transforma o filtro em minúsculo  para evitar erros de digitação
+        switch ($filtro) {
+            case 'user_id':
+                $opcoes = User::whereHas('compliances')
+                    ->orderBy('name')
+                    ->pluck('name')
+                    ->toArray();
+                break;
+            case 'departament':
+                $opcoes = Departament::whereHas('compliances')
+                    ->orderBy('name')
+                    ->pluck('name')
+                    ->toArray();
+                break;
+            case 'classification':
+                $opcoes = Classification::whereHas('compliances')
+                    ->orderBy('name')
+                    ->pluck('name')
+                    ->toArray();
+                break;
+            case 'client':
+                $opcoes = Client::whereHas('compliances')
+                    ->orderBy('name')
+                    ->pluck('name')
+                    ->toArray();
+                break;
+            case 'user':
+                $opcoes = User::orderBy('name')->pluck('name')->toArray();
+                break;
+            default:
+                // Opção inválida ou nenhum filtro selecionado
+                $opcoes = ['1' => 'a'];
+                break;
+        }
+
+
+        return response()->json($opcoes);
+    }
 
     public function create()
     {

@@ -19,17 +19,19 @@ use App\Http\Controllers\MessageController;
 |
 */
 
-Route::get('/', [ComplianceController::class, 'index'])->middleware('auth');
-Route::get('/compliance/create', [ComplianceController::class, 'create'])->middleware('auth');
-Route::post('/compliance', [ComplianceController::class, 'store'])->middleware('auth');
-Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit'])->middleware('auth');
-Route::put('/compliance/update/{id}', [ComplianceController::class, 'update'])->middleware('auth');
-Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->name('compliance.show')->middleware('auth');
-
-
-
 // Definir o middleware 'auth' para todas as rotas dentro do grupo
 Route::middleware(['auth'])->group(function () {
+    // RNC
+
+    Route::get('/', [ComplianceController::class, 'index']);
+    Route::get('/compliance/create', [ComplianceController::class, 'create']);
+    Route::post('/compliance', [ComplianceController::class, 'store']);
+    Route::get('/compliance/edit/{id}', [ComplianceController::class, 'edit']);
+    Route::put('/compliance/update/{id}', [ComplianceController::class, 'update']);
+    Route::get('/compliance/show/{id}', [ComplianceController::class, 'show'])->name('compliance.show');
+    Route::get('/buscar-opcoes', [ComplianceController::class, 'options']);
+
+
     // Usuários
     Route::middleware(['checkRole'])->prefix('users')->group(function () {
         Route::get('/listagem', [UserController::class, 'list']);
@@ -64,12 +66,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [DepartamentController::class, 'edit']);
         Route::put('/update/{id}', [DepartamentController::class, 'update']);
     });
-
+    // Mensagem
     Route::put('/message', [MessageController::class, 'create']);
 });
-
-// Mensagem
-
 
 Route::middleware([
     'auth:sanctum',

@@ -102,141 +102,175 @@
       </div>
       <div class="tab-pane {{ $user->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
         aria-labelledby="all-tab">
+        <form id="searchForm">
+          <div class="formbold-input-group mt-2">
+            <label class="formbold-form-label">Buscar por:</label>
+            <select name="searchType" id="searchType" class="form-control">
+              <option disabled selected> Selecione uma opção</option>
+              <option value="id">ID</option>
+              <option value="user_id">Registrado por</option>
+              <option value="registrationDate">Data de registro</option>
+              <option value="classification">Classificação</option>
+              <option value="client">Cliente</option>
+              <option value="departament">Departamento responsável</option>
+            </select>
+          </div>
+          <div class="formbold-input-group" id="searchDataContainer">
+            <select name="searchData" id="searchData" class="form-control mt-1">
+              <option disabled selected> Selecione uma opção</option>
+            </select>
+          </div>
+          <div class="formbold-input-group">
+            <label class="formbold-form-label">Status:</label>
+            <select name="searchStatus" id="searchStatus" class="form-control">
+              <option disabled selected> Selecione uma opção</option>
+              <option value='1'> Sem trativa</option>
+              <option value='2'> Em andamento</option>
+              <option value='3'> Concluído</option>
+              <option value='4'> Todas</option>
+            </select>
+          </div>
+          <div class="formbold-input-group">
+            <select name="searchLate" id="searchLate" class="form-control">
+              <option value='' disabled selected> Selecione uma opção</option>
+              <option value='0'> No prazo</option>
+              <option value='1'> Em atraso</option>
+            </select>
+          </div>
+          <div class="text-right">
+            <button class="btn btn-primary mb-2" id="searchButton"> Buscar </button>
+          </div>
+        </form>
         @if (count($compliances) > 0)
-          <form>
-            <div class="input-group m-3">
-              <input type="text" name="search" class="form-control" aria-label="Text input with select button">
-              <div class="input-group-append">
-                <select name="type" class="form-control">
-                  <option selected disabled>Selecione uma opção</option>
-                  <option value="id">ID</option>
-                  <option value="user_id">Registrado por</option>
-                  <option value="registrationDate">Data de registro</option>
-                  <option value="classification">Classificação</option>
-                  <option value="client">Cliente</option>
-                  <option value="departament">Departamento responsável</option>
-                  <option value="status">Status</option>
-                  <option value="check_late">Prazo</option>
-                </select>
-              </div>
-          </form>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-sm" id="myTable">
-          <thead>
-            <tr>
-              <th class="text-center sort" data-sort="id">ID</th>
-              <th class="text-center sort" data-sort="registeredBy">Registrado por</th>
-              <th class="text-center sort" data-sort="registrationDate">Data de registro</th>
-              <th class="text-center sort" data-sort="classification">Classificação</th>
-              <th class="text-center sort" data-sort="client">Cliente</th>
-              <th class="text-center sort" data-sort="nonconformity">Não conformidade</th>
-              <th class="text-center sort" data-sort="immediateAction">Ação imediata</th>
-              <th class="text-center sort" data-sort="responsibleDepartment">Departamento responsável</th>
-              <th class="text-center sort" data-sort="status">Status</th>
-              <th class="text-center sort" data-sort="check_late">Prazo</th>
-              <th class="text-center">...</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($compliances as $compliance)
-              <tr>
-                <td class="text-center">{{ $compliance->id }}</td>
-                <td class="text-center">{{ $compliance->user->name }}</td>
-                <td class="text-center">{{ \Carbon\Carbon::parse($compliance->compliance_date)->format('d/m/Y') }}
-                </td>
-                <td class="text-center">{{ $compliance->classification->name }}</td>
-                <td class="text-center">{{ $compliance->client->name }}</td>
-                <td class="text-center">{{ $compliance->non_compliance }}</td>
-                <td class="text-center">{{ $compliance->instant_action }}</td>
-                <td class="text-center">{{ $compliance->departament->name }}</td>
-                <td class="text-center"><a
-                    class="{{ $compliance->status == 2 ? 'btn bg-inprogress' : ($compliance->status == 3 ? 'btn bg-completed' : ($compliance->status == 4 ? 'btn bg-late' : '')) }}">{{ $status[$compliance->status] }}</a>
-                </td>
-                <td class="text-center">
-                  <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
-                    {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
-                  </a>
-                </td>
-                <td class="text-center">
-                  <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
-                    <ion-icon name="eye"></ion-icon>
-                  </a>
-                  <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">
-                    <ion-icon name="create"></ion-icon>
-                  </a>
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
-        {{ $compliances->links() }}
-      </div>
-    @else
-      <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
-      @endif
-    </div>
-    <div class="tab-pane" id="departament" role="tabpanel" aria-labelledby="departament-tab">
-      @if (count($departaments) > 0)
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">Registrado por</th>
-                <th class="text-center">Data de registro</th>
-                <th class="text-center">Classificação</th>
-                <th class="text-center">Cliente</th>
-                <th class="text-center">Não conformidade</th>
-                <th class="text-center">Ação imediata</th>
-                <th class="text-center">Departamento responsável</th>
-                <th class="text-center">Prazo</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">...</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($departaments as $departament)
-                @foreach ($departament->compliances as $compliances)
+          <div class="table-responsive">
+            <table class="table table-sm" id="myTable">
+              <thead>
+                <tr>
+                  <th class="text-center sort" data-sort="id">ID</th>
+                  <th class="text-center sort" data-sort="registeredBy">Registrado por</th>
+                  <th class="text-center sort" data-sort="registrationDate">Data de registro</th>
+                  <th class="text-center sort" data-sort="classification">Classificação</th>
+                  <th class="text-center sort" data-sort="client">Cliente</th>
+                  <th class="text-center sort" data-sort="nonconformity">Não conformidade</th>
+                  <th class="text-center sort" data-sort="immediateAction">Ação imediata</th>
+                  <th class="text-center sort" data-sort="responsibleDepartment">Departamento responsável</th>
+                  <th class="text-center sort" data-sort="status">Status</th>
+                  <th class="text-center sort" data-sort="check_late">Prazo</th>
+                  <th class="text-center">...</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($compliances as $compliance)
                   <tr>
-                    <td class="text-center">{{ $compliances->id }}</td>
-                    <td class="text-center">{{ $compliances->user->name }}</td>
-                    <td class="text-center">
-                      {{ \Carbon\Carbon::parse($compliances->compliance_date)->format('d/m/Y') }}
+                    <td class="text-center">{{ $compliance->id }}</td>
+                    <td class="text-center">{{ $compliance->user->name }}</td>
+                    <td class="text-center">{{ \Carbon\Carbon::parse($compliance->compliance_date)->format('d/m/Y') }}
                     </td>
-                    <td class="text-center">{{ $compliances->classification->name }}</td>
-                    <td class="text-center">{{ $compliances->client->name }}</td>
-                    <td class="text-center">{{ $compliances->non_compliance }}</td>
-                    <td class="text-center">{{ $compliances->instant_action }}</td>
-                    <td class="text-center">{{ $departament->name }}</td>
+                    <td class="text-center">{{ $compliance->classification->name }}</td>
+                    <td class="text-center">{{ $compliance->client->name }}</td>
+                    <td class="text-center">{{ $compliance->non_compliance }}</td>
+                    <td class="text-center">{{ $compliance->instant_action }}</td>
+                    <td class="text-center">{{ $compliance->departament->name }}</td>
+                    <td class="text-center"><a
+                        class="{{ $compliance->status == 2 ? 'btn bg-inprogress' : ($compliance->status == 3 ? 'btn bg-completed' : ($compliance->status == 4 ? 'btn bg-late' : '')) }}">{{ $status[$compliance->status] }}</a>
+                    </td>
                     <td class="text-center">
-                      <a class="{{ $compliances->check_late ? 'btn bg-late' : '' }}">
-                        {{ $compliances->check_late ? 'Em atraso' : 'No prazo' }}
+                      <a class="{{ $compliance->check_late ? 'btn bg-late' : '' }}">
+                        {{ $compliance->check_late ? 'Em atraso' : 'No prazo' }}
                       </a>
                     </td>
-                    <td class="text-center"><a
-                        class="{{ $compliances->status == 2 ? 'btn bg-inprogress' : ($compliances->status == 3 ? 'btn bg-completed' : '') }}">
-                        {{ $status[$compliances->status] }}</a>
-                    </td>
                     <td class="text-center">
-                      <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                      <a href="/compliance/show/{{ $compliance->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="eye"></ion-icon>
                       </a>
-                      <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                      <a href="/compliance/edit/{{ $compliance->id }}" class="btn btn-primary mt-2">
                         <ion-icon name="create"></ion-icon>
                       </a>
                     </td>
                   </tr>
                 @endforeach
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-      @else
-        <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
-      @endif
+              </tbody>
+            </table>
+            {{ $compliances->links() }}
+          </div>
+          <!-- Campo de seleção para o número de itens por página -->
+          <div class="formbold-input-group">
+            <form id="pageForm">
+              <label class="formbold-form-label">Itens por página:</label>
+              <select name="perPage" id="perPage" class="form-control">
+                <option value="5">5</option>
+                <option {{ $perPage == 10 ? 'selected' : '' }} value="10">10</option>
+                <option {{ $perPage == 25 ? 'selected' : '' }} value="25">25</option>
+                <option {{ $perPage == 50 ? 'selected' : '' }} value="50">50</option>
+                <option {{ $perPage == 100 ? 'selected' : '' }} value="100">100</option>
+              </select>
+            </form>
+          </div>
+        @else
+          <p class="mt-3"> Não foram encontrados resultados</p>
+        @endif
+      </div>
+      <div class="tab-pane" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+        @if (count($departaments) > 0)
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">ID</th>
+                  <th class="text-center">Registrado por</th>
+                  <th class="text-center">Data de registro</th>
+                  <th class="text-center">Classificação</th>
+                  <th class="text-center">Cliente</th>
+                  <th class="text-center">Não conformidade</th>
+                  <th class="text-center">Ação imediata</th>
+                  <th class="text-center">Departamento responsável</th>
+                  <th class="text-center">Prazo</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">...</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($departaments as $departament)
+                  @foreach ($departament->compliances as $compliances)
+                    <tr>
+                      <td class="text-center">{{ $compliances->id }}</td>
+                      <td class="text-center">{{ $compliances->user->name }}</td>
+                      <td class="text-center">
+                        {{ \Carbon\Carbon::parse($compliances->compliance_date)->format('d/m/Y') }}
+                      </td>
+                      <td class="text-center">{{ $compliances->classification->name }}</td>
+                      <td class="text-center">{{ $compliances->client->name }}</td>
+                      <td class="text-center">{{ $compliances->non_compliance }}</td>
+                      <td class="text-center">{{ $compliances->instant_action }}</td>
+                      <td class="text-center">{{ $departament->name }}</td>
+                      <td class="text-center">
+                        <a class="{{ $compliances->check_late ? 'btn bg-late' : '' }}">
+                          {{ $compliances->check_late ? 'Em atraso' : 'No prazo' }}
+                        </a>
+                      </td>
+                      <td class="text-center"><a
+                          class="{{ $compliances->status == 2 ? 'btn bg-inprogress' : ($compliances->status == 3 ? 'btn bg-completed' : '') }}">
+                          {{ $status[$compliances->status] }}</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="/compliance/show/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                          <ion-icon name="eye"></ion-icon>
+                        </a>
+                        <a href="/compliance/edit/{{ $compliances->id }}" class="btn btn-primary mt-2">
+                          <ion-icon name="create"></ion-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  @endforeach
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        @else
+          <p class="mt-3"> Não há relatórios cadastrados, <a href="/compliance/create">cadastrar relatórios</a></p>
+        @endif
+      </div>
     </div>
-  </div>
   </div>
   <script>
     const table = document.getElementById('myTable');
@@ -302,4 +336,107 @@
       });
     });
   </script>
+  <script>
+    $(document).ready(function() {
+      // Verificar se há parâmetros de pesquisa na URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var searchType = urlParams.get('searchType');
+      var searchData = urlParams.get('searchData');
+      var searchStatus = urlParams.get('searchStatus');
+      var searchLate = urlParams.get('searchLate');
+
+      // Preencher os selects com os valores dos parâmetros, se existirem
+      if (searchType) {
+        $('#searchType').val(searchType);
+      }
+      if (searchData) {
+        carregarOpcoesData(searchType, searchData);
+        $('#searchData').val(searchData);
+      }
+      if (searchStatus) {
+        $('#searchStatus').val(searchStatus);
+      }
+      if (searchLate) {
+        $('#searchLate').val(searchLate);
+      }
+
+
+      // Chamar a função quando o primeiro select for alterado
+      $('#searchType').on('change', function() {
+        searchType = $(this).val(); // Valor selecionado no primeiro select
+
+        if (searchType === 'id') {
+          $('#searchDataContainer').html(
+            '<input type="text" name="searchData" id="searchData" class="form-control mt-1">');
+        } else if (searchType === 'registrationDate') {
+          $('#searchDataContainer').html(
+            '<input type="date" name="searchData" id="searchData" class="form-control mt-1">');
+        } else {
+          $('#searchDataContainer')
+            .html(
+              '<select name="searchData" id="searchData" class="form-control mt-1 select2"><option disabled selected>Selecione uma opção</option></select>'
+            );
+        }
+        // Limpar o segundo select
+        $('#searchData').empty();
+
+        // Verificar se uma opção foi selecionada
+        if (searchType) {
+          // Carregar as opções do segundo select
+          carregarOpcoesData(searchType);
+        }
+      });
+
+      // Função para carregar as opções do segundo select
+      function carregarOpcoesData(searchType, searchData) {
+        $.ajax({
+          url: '/buscar-opcoes',
+          type: 'GET',
+          data: {
+            filtro: searchType
+          },
+          success: function(response) {
+            // Preencher o segundo select com as opções retornadas
+            $('#searchData').empty(); // Limpar o select antes de preenchê-lo novamente
+
+            $('#searchData').append($('<option>').text('Selecione uma opção').val('').prop('disabled', true)
+              .prop('selected', true).attr('disabled', 'disabled'));
+
+            $.each(response, function(key, value) {
+              $('#searchData').append($('<option>').text(value).val(value));
+            });
+
+            // Selecionar a opção armazenada, se existir
+            if (searchData) {
+              $('#searchData').val(searchData);
+            }
+          },
+          error: function(xhr) {
+            console.log(xhr.responseText);
+          }
+        });
+      }
+    });
+  </script>
+  <script>
+    // Função para atualizar a URL com o parâmetro de quantidade de itens selecionado e redirecionar para a página atual
+    function updatePerPageQueryParam(perPage) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('perPage', perPage);
+      window.location.href = url.toString();
+    }
+
+    // Evento de alteração na seleção de quantidade de itens paginados
+    $('#perPage').on('change', function() {
+      var perPage = $(this).val();
+      updatePerPageQueryParam(perPage);
+    });
+
+    // Preencher o valor selecionado na seleção de quantidade de itens paginados, se existir
+    var perPage = new URLSearchParams(window.location.search).get('perPage');
+    if (perPage) {
+      $('#perPage').val(perPage);
+    }
+  </script>
+
 @endsection

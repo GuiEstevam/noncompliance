@@ -39,7 +39,7 @@
           <label class="formbold-form-label">
             Cliente
           </label>
-          <select class="formbold-form-select" name="client_id" id="client_id" required>
+          <select class="form-control" name="client_id" id="client_id" required>
             <option value="" selected disabled>Selecione uma empresa</option>
             @foreach ($clients as $clients)
               <option value="{{ $clients->id }}">{{ $clients->name }}</option>
