@@ -102,7 +102,12 @@
       </div>
       <div class="tab-pane {{ $user->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
         aria-labelledby="all-tab">
-        <form id="searchForm">
+        <div class="search-toggle m-2 text-right">
+          <h4>PESQUISAR
+            <ion-icon name="search"></ion-icon>
+          </h4> <!-- Ícone ou seta para exibir/ocultar o formulário -->
+        </div>
+        <form id="searchForm" class="hidden">
           <div class="formbold-input-group mt-2">
             <label class="formbold-form-label">Buscar por:</label>
             <select name="searchType" id="searchType" class="form-control">
@@ -438,5 +443,24 @@
       $('#perPage').val(perPage);
     }
   </script>
+  <script>
+    $(document).ready(function() {
+      // Ao clicar na seta, exibir/ocultar o formulário de pesquisa
+      $('.search-toggle').click(function() {
+        $('#searchForm').toggle();
+      });
 
+      // Verificar se há parâmetros de pesquisa na URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var searchType = urlParams.get('searchType');
+      var searchData = urlParams.get('searchData');
+      var searchStatus = urlParams.get('searchStatus');
+      var searchLate = urlParams.get('searchLate');
+
+      // Exibir o formulário de pesquisa se houver campos selecionados
+      if (searchType || searchData || searchStatus || searchLate) {
+        $('#searchForm').show();
+      }
+    });
+  </script>
 @endsection
