@@ -315,6 +315,8 @@ class ComplianceController extends Controller
                 $compliance->departament->name,
                 $status[$compliance->status],
                 $compliance->check_late ? 'Em atraso' : 'No prazo',
+                Carbon::parse($compliance->created_at)->format('d/m/Y'),
+                Carbon::parse($compliance->updated_at)->format('d/m/Y'),
             ];
 
             $data[] = $rowData;

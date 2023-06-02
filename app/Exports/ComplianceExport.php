@@ -37,6 +37,8 @@ class ComplianceExport implements FromCollection, WithHeadings
             'Departamento responsável',
             'Status',
             'Prazo',
+            'Criado em',
+            'Última atualização'
         ];
     }
 }
