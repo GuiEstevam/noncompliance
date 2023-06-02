@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ComplianceExport;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Classification;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ComplianceController extends Controller
 {
@@ -21,7 +23,6 @@ class ComplianceController extends Controller
             1 => 'Sem tratativa',
             2 => 'Em andamento',
             3 => 'Finalizado',
-            4 => 'Em atraso',
         ];
 
         $user = auth::user();
@@ -258,7 +259,6 @@ class ComplianceController extends Controller
             1 => 'Sem tratativa',
             2 => 'Em andamento',
             3 => 'Finalizado',
-            4 => 'Em atraso',
         ];
 
         $departaments = [
@@ -289,5 +289,37 @@ class ComplianceController extends Controller
             'status',
             'action_time'
         ));
+    }
+
+    public function export()
+    {
+        $compliances = Compliance::all();
+
+        $data = [];
+
+        $status = [
+            1 => 'Sem tratativa',
+            2 => 'Em andamento',
+            3 => 'Finalizado',
+        ];
+        foreach ($compliances as $compliance) {
+
+            $rowData = [
+                $compliance->id,
+                $compliance->user->name,
+                Carbon::parse($compliance->compliance_date)->format('d/m/Y'),
+                $compliance->classification->name,
+                $compliance->client->name,
+                $compliance->non_compliance,
+                $compliance->instant_action,
+                $compliance->departament->name,
+                $status[$compliance->status],
+                $compliance->check_late ? 'Em atraso' : 'No prazo',
+            ];
+
+            $data[] = $rowData;
+        }
+
+        return Excel::download(new ComplianceExport($data), 'compliances.xlsx');
     }
 }

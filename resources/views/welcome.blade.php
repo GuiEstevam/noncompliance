@@ -4,7 +4,7 @@
 
   <div class="col-md-10 offset-md-1 dashboard-title-container">
     <div class="col-md mt-3 text-right">
-      <div class="btn-group " role="group">
+      <div class="btn-group" role="group">
         <a href="/compliance/create">
           <button class="btn btn-primary">
             Criar
@@ -102,13 +102,15 @@
       </div>
       <div class="tab-pane {{ $user->role_id == 3 ? 'active' : '' }}" id="all" role="tabpanel"
         aria-labelledby="all-tab">
-        <div class="search-toggle m-2 text-right">
-          <h4>PESQUISAR
+        <div class="m-2 text-right">
+          <button class="search-toggle btn btn-secondary">
             <ion-icon name="search"></ion-icon>
-          </h4> <!-- Ícone ou seta para exibir/ocultar o formulário -->
+            PESQUISAR
+          </button> <!-- Ícone ou seta para exibir/ocultar o formulário -->
         </div>
+
         <form id="searchForm" class="hidden">
-          <div class="formbold-input-group mt-2">
+          <div class="formbold-input-group m-2">
             <label class="formbold-form-label">Buscar por:</label>
             <select name="searchType" id="searchType" class="form-control">
               <option disabled selected> Selecione uma opção</option>
@@ -120,12 +122,12 @@
               <option value="departament">Departamento responsável</option>
             </select>
           </div>
-          <div class="formbold-input-group" id="searchDataContainer">
+          <div class="formbold-input-group m-2" id="searchDataContainer">
             <select name="searchData" id="searchData" class="form-control mt-1">
               <option disabled selected> Selecione uma opção</option>
             </select>
           </div>
-          <div class="formbold-input-group">
+          <div class="formbold-input-group m-2">
             <label class="formbold-form-label">Status:</label>
             <select name="searchStatus" id="searchStatus" class="form-control">
               <option disabled selected> Selecione uma opção</option>
@@ -135,17 +137,23 @@
               <option value='4'> Todas</option>
             </select>
           </div>
-          <div class="formbold-input-group">
+          <div class="formbold-input-group m-2">
             <select name="searchLate" id="searchLate" class="form-control">
               <option value='' disabled selected> Selecione uma opção</option>
               <option value='0'> No prazo</option>
               <option value='1'> Em atraso</option>
             </select>
           </div>
-          <div class="text-right">
+          <div class="text-right m-2">
             <button class="btn btn-primary mb-2" id="searchButton"> Buscar </button>
           </div>
         </form>
+        <div class="text-right m-2">
+          <a href="/export-compliances" class='btn btn-success'>
+            <ion-icon name="library">
+            </ion-icon> Excel
+          </a>
+        </div>
         @if (count($compliances) > 0)
           <div class="table-responsive">
             <table class="table table-sm" id="myTable">

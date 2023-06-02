@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     });
     // Mensagem
     Route::put('/message', [MessageController::class, 'create']);
+    Route::get('/export-compliances', [ComplianceController::class, 'export'])->name('export-compliances');
 });
 
 Route::middleware([
