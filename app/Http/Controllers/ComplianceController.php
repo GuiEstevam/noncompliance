@@ -107,7 +107,6 @@ class ComplianceController extends Controller
     public function options(Request $request)
     {
         $filtro = $request->input('filtro');
-        $filtro = strtolower($filtro); // Transforma o filtro em minúsculo  para evitar erros de digitação
         switch ($filtro) {
             case 'user_id':
                 $opcoes = User::whereHas('compliances')
